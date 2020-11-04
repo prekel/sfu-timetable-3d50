@@ -27,6 +27,7 @@ const AutocompleteResult: React.FunctionComponent<{ startWith: string }> = ({
   const [error, setError] = useState<Error | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [items, setItems] = useState<string[]>([]);
+  const [aut, setAut] = useState<string>("1");
 
   useEffect(() => {
     setIsLoaded(false);
@@ -34,18 +35,17 @@ const AutocompleteResult: React.FunctionComponent<{ startWith: string }> = ({
       "https://edu.sfu-kras.ru/timetable/groups/autocomplete/" +
         encodeURIComponent(startWith),
       {
-        mode: "no-cors",
+        headers: { Accept: "application/json" },
       }
     )
       .then(async (res) => {
-        console.log(await res.text());
-        return res.json();
+        return res.text();
       })
       .then(
         (result) => {
           setIsLoaded(true);
           console.log(result);
-          setItems(result);
+          setAut(result);
         },
         (error) => {
           setIsLoaded(true);
@@ -55,7 +55,7 @@ const AutocompleteResult: React.FunctionComponent<{ startWith: string }> = ({
       );
   }, [startWith]);
 
-  return <div>{items[0]}</div>;
+  return <div>{aut}</div>;
 
   //   if (error) {
   //     return <div>Error: {error.message}</div>;
