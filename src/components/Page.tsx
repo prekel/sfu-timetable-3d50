@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { HashRouter, BrowserRouter, Redirect } from "react-router-dom";
-import { Container, Form, Button } from "react-bootstrap";
-import { createBrowserHistory } from "history";
-import { MainSwitch } from "./MainSwitch";
+import { Container } from "react-bootstrap";
 
-const history = createBrowserHistory();
-const basename = "/sfu-timetable-3d50";
+import { basename } from "../App";
+import { MainSwitch } from "./MainSwitch";
+import { TargetForm } from "./TargetForm";
 
 export const Page: React.FunctionComponent = () => {
   return (
@@ -22,39 +21,5 @@ export const Page: React.FunctionComponent = () => {
         </HashRouter>
       </>
     </BrowserRouter>
-  );
-};
-
-const TargetForm: React.FunctionComponent = () => {
-  const [target, setTarget] = useState(history.location.hash.substr(2));
-  const [currentTarget, setCurrentTarget] = useState(target);
-  console.log(target);
-
-  return (
-    <>
-      <Redirect to={"/" + encodeURIComponent(currentTarget)} />
-      <Form
-        onSubmit={(event) => {
-          event.preventDefault();
-          setCurrentTarget(target);
-          history.push(basename + "/#/" + encodeURIComponent(target));
-        }}
-      >
-        <Form.Group>
-          <Form.Control
-            placeholder="Группа/преподаватель"
-            onChange={(event) => setTarget(event.target.value)}
-          />
-        </Form.Group>
-        <Button
-          onClick={() => {
-            setCurrentTarget(target);
-            history.push(basename + "/#/" + encodeURIComponent(target));
-          }}
-        >
-          Открыть
-        </Button>
-      </Form>
-    </>
   );
 };
