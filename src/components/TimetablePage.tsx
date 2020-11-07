@@ -7,7 +7,7 @@ export const TimetablePage: React.FunctionComponent = () => {
   return (
     <>
       <h3>{decodeURIComponent(target)}</h3>
-      <Timetable target={target}/>
+      <Timetable target={target} />
     </>
   );
 };
