@@ -9,7 +9,7 @@ export const TargetForm: React.FunctionComponent = () => {
 
   return (
     <>
-      <Redirect to={"/" + encodeURIComponent(currentTarget)} />
+      <Redirect push to={"/" + encodeURIComponent(currentTarget)} />
       <Form
         onSubmit={(event) => {
           event.preventDefault();

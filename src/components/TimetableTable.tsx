@@ -2,22 +2,13 @@ import React, { useEffect, useState } from "react";
 
 import { Table } from "react-bootstrap";
 
-interface Day {
-  day: number;
-  week: number;
-  time: string;
-  subject: string;
-  type: string;
-  teacher: string;
-  place: string;
-}
+import { Timetable } from "../Timetable";
 
-export const Timetable: React.FunctionComponent<{ target: string }> = ({
+export const TimetableTable: React.FunctionComponent<{ target: string }> = ({
   target,
 }) => {
   const [error, setError] = useState<Error | null>(null);
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [items, setItems] = useState<Day[]>([]);
+  const [timetable, setTimetable] = useState<Timetable | null>(null);
 
   useEffect(() => {
     fetch(
@@ -26,12 +17,10 @@ export const Timetable: React.FunctionComponent<{ target: string }> = ({
     )
       .then((res) => res.json())
       .then(
-        (result) => {
-          setIsLoaded(true);
-          setItems(result.timetable);
+        (result: Timetable) => {
+          setTimetable(result);
         },
         (error: Error) => {
-          setIsLoaded(true);
           setError(error);
         }
       );
@@ -39,9 +28,10 @@ export const Timetable: React.FunctionComponent<{ target: string }> = ({
 
   if (error) {
     return <div>Error: {error.message}</div>;
-  } else if (!isLoaded) {
+  } else if (!timetable) {
     return <div>Loading...</div>;
   } else {
+    const tgh = timetable.type === "group" ? "Преподаватель" : "Группы";
     return (
       <Table striped bordered hover>
         <thead>
@@ -50,23 +40,26 @@ export const Timetable: React.FunctionComponent<{ target: string }> = ({
             <th>Неделя</th>
             <th>Время</th>
             <th>Предмет</th>
-            <th>Преподаватель</th>
+            <th>{tgh}</th>
             <th>Тип</th>
             <th>Место</th>
           </tr>
         </thead>
         <tbody>
-          {items.map((item) => (
-            <tr key={item.day + " " + item.week + " " + item.time}>
-              <td>{item.day}</td>
-              <td>{item.week}</td>
-              <td>{item.time}</td>
-              <td>{item.subject}</td>
-              <td>{item.teacher}</td>
-              <td>{item.type}</td>
-              <td>{item.place}</td>
-            </tr>
-          ))}
+          {timetable?.timetable.map((item) => {
+            const tg = item.teacher ? item.teacher : item.groups?.join(", ");
+            return (
+              <tr key={item.day + item.week + item.time}>
+                <td>{item.day}</td>
+                <td>{item.week}</td>
+                <td>{item.time}</td>
+                <td>{item.subject}</td>
+                <td>{tg}</td>
+                <td>{item.type}</td>
+                <td>{item.place}</td>
+              </tr>
+            );
+          })}
         </tbody>
       </Table>
     );
