@@ -1,41 +1,60 @@
 import React, { useState } from "react";
 import { HashRouter, BrowserRouter, Redirect } from "react-router-dom";
-import { MainSwitch } from "./MainSwitch";
 import { Container, Form, Button } from "react-bootstrap";
-import { LinkContainer } from "react-router-bootstrap";
+import { createBrowserHistory } from "history";
+import { MainSwitch } from "./MainSwitch";
+
+const history = createBrowserHistory();
+const basename = "/sfu-timetable-3d50";
 
 export const Page: React.FunctionComponent = () => {
-  const [target, setTarget] = useState("КИ18-16б");
+  return (
+    <BrowserRouter basename={basename}>
+      <>
+        <Redirect to={"/"} />
+        <HashRouter>
+          <>
+            <Container>
+              <TargetForm />
+              <MainSwitch />
+            </Container>
+          </>
+        </HashRouter>
+      </>
+    </BrowserRouter>
+  );
+};
+
+const TargetForm: React.FunctionComponent = () => {
+  const [target, setTarget] = useState(history.location.hash.substr(2));
   const [currentTarget, setCurrentTarget] = useState(target);
+  console.log(target);
 
   return (
-    <BrowserRouter basename="/sfu-timetable-3d50">
-      <HashRouter>
-        <Redirect push to={"/" + currentTarget}/>
-        <Container>
-          <Form
-            onSubmit={(event) => {
-              event.preventDefault();
-              setCurrentTarget(encodeURIComponent(target));
-            }}
-          >
-            <Form.Group>
-              <Form.Control
-                placeholder="Группа/преподаватель"
-                onChange={(event) => setTarget(event.target.value)}
-              />
-            </Form.Group>
-            <LinkContainer to={"/" + currentTarget}>
-              <Button
-                onClick={() => setCurrentTarget(encodeURIComponent(target))}
-              >
-                Открыть
-              </Button>
-            </LinkContainer>
-          </Form>
-          <MainSwitch />
-        </Container>
-      </HashRouter>
-    </BrowserRouter>
+    <>
+      <Redirect to={"/" + encodeURIComponent(currentTarget)} />
+      <Form
+        onSubmit={(event) => {
+          event.preventDefault();
+          setCurrentTarget(target);
+          history.push(basename + "/#/" + encodeURIComponent(target));
+        }}
+      >
+        <Form.Group>
+          <Form.Control
+            placeholder="Группа/преподаватель"
+            onChange={(event) => setTarget(event.target.value)}
+          />
+        </Form.Group>
+        <Button
+          onClick={() => {
+            setCurrentTarget(target);
+            history.push(basename + "/#/" + encodeURIComponent(target));
+          }}
+        >
+          Открыть
+        </Button>
+      </Form>
+    </>
   );
 };
