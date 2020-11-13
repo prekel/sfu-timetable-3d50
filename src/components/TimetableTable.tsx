@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 
-import { Table } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 
 import { Timetable } from "../Timetable";
+
+import { TimetableWeek } from "./TimetableWeek";
 
 export const TimetableTable: React.FunctionComponent<{ target: string }> = ({
   target,
@@ -31,37 +33,17 @@ export const TimetableTable: React.FunctionComponent<{ target: string }> = ({
   } else if (!timetable) {
     return <div>Loading...</div>;
   } else {
-    const tgh = timetable.type === "group" ? "Преподаватель" : "Группы";
     return (
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>День</th>
-            <th>Неделя</th>
-            <th>Время</th>
-            <th>Предмет</th>
-            <th>{tgh}</th>
-            <th>Тип</th>
-            <th>Место</th>
-          </tr>
-        </thead>
-        <tbody>
-          {timetable?.timetable.map((item) => {
-            const tg = item.teacher ? item.teacher : item.groups?.join(", ");
-            return (
-              <tr key={item.day + item.week + item.time}>
-                <td>{item.day}</td>
-                <td>{item.week}</td>
-                <td>{item.time}</td>
-                <td>{item.subject}</td>
-                <td>{tg}</td>
-                <td>{item.type}</td>
-                <td>{item.place}</td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </Table>
+      <>
+        <Row>
+          <Col>
+            <TimetableWeek week="1" timetable={timetable} />
+          </Col>
+          <Col>
+            <TimetableWeek week="2" timetable={timetable} />
+          </Col>
+        </Row>
+      </>
     );
   }
 };
