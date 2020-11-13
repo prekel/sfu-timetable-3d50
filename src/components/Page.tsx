@@ -10,7 +10,7 @@ export const Page: FC = () => {
   return (
     <BrowserRouter basename={Basename}>
       <>
-        <Redirect push to={"/"} />
+        {/* <Redirect push to={"/"} /> */}
         <HashRouter>
           <>
             <Container>

@@ -14,10 +14,10 @@ export const TimetableLesson: FC<{ lesson: Lesson }> = ({ lesson }) => {
         </Link>
       ) : (
         lesson.groups?.map((group, idx, arr) => (
-          <>
+          <React.Fragment key={group}>
             <Link to={"/" + encodeURIComponent(group)}>{group}</Link>
             {idx !== arr.length - 1 ? <span>, </span> : <></>}
-          </>
+          </React.Fragment>
         ))
       )}
       <p>{lesson.place}</p>
