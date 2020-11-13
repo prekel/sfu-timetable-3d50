@@ -1,7 +1,12 @@
 import React, { FC } from "react";
 import { Card, ListGroup } from "react-bootstrap";
 
-import { Timetable, DayOfWeekFromNumber, DayEnum, WeekEnum } from "../Timetable";
+import {
+  Timetable,
+  DayOfWeekFromNumber,
+  DayEnum,
+  WeekEnum,
+} from "../Timetable";
 import { TimetableLesson } from "./TimetableLesson";
 
 export const TimetableDay: FC<{
@@ -12,7 +17,16 @@ export const TimetableDay: FC<{
   const lessons = timetable.timetable
     .filter((lesson) => lesson.day === day && lesson.week === week)
     .map((lesson) => (
-      <ListGroup.Item key={lesson.day + lesson.week + lesson.time}>
+      <ListGroup.Item
+        key={
+          lesson.day +
+          lesson.week +
+          lesson.time +
+          lesson.groups +
+          lesson.teacher +
+          lesson.type
+        }
+      >
         <TimetableLesson lesson={lesson}></TimetableLesson>
       </ListGroup.Item>
     ));
@@ -22,13 +36,7 @@ export const TimetableDay: FC<{
   } else {
     return (
       <Card className="mb-4">
-        <Card.Header>
-          {
-            [DayOfWeekFromNumber(day)].map(
-              (g) => g.charAt(0).toUpperCase() + g.slice(1)
-            )[0]
-          }
-        </Card.Header>
+        <Card.Header>{DayOfWeekFromNumber(day)}</Card.Header>
         <ListGroup variant="flush">{lessons}</ListGroup>
       </Card>
     );

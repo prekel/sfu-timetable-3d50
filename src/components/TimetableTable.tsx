@@ -7,9 +7,10 @@ import { TimetableWeek } from "./TimetableWeek";
 export const TimetableTable: FC<{ target: string }> = ({ target }) => {
   const [error, setError] = useState<Error | null>(null);
   const [timetable, setTimetable] = useState<Timetable | null>(null);
+  const [isLoaded, setIsLoaded] = useState<boolean>(false);
 
   useEffect(() => {
-    setTimetable(null);
+    setIsLoaded(false);
     fetch(
       "https://edu.sfu-kras.ru/api/timetable/get&target=" +
         encodeURIComponent(target)
@@ -18,6 +19,7 @@ export const TimetableTable: FC<{ target: string }> = ({ target }) => {
       .then(
         (result: Timetable) => {
           setTimetable(result);
+          setIsLoaded(true);
         },
         (error: Error) => {
           setError(error);
@@ -25,14 +27,16 @@ export const TimetableTable: FC<{ target: string }> = ({ target }) => {
       );
   }, [target]);
 
+  const spinner = (
+    <Spinner animation="border" role="status">
+      <span className="sr-only">Загрузка...</span>
+    </Spinner>
+  );
+
   if (error) {
     return <Alert variant="danger">Ошибка: {error.message}</Alert>;
   } else if (!timetable) {
-    return (
-      <Spinner animation="border" role="status">
-        <span className="sr-only">Загрузка...</span>
-      </Spinner>
-    );
+    return <Jumbotron>{spinner}</Jumbotron>;
   } else if (timetable.timetable.length === 0) {
     return (
       <Jumbotron>
@@ -45,7 +49,7 @@ export const TimetableTable: FC<{ target: string }> = ({ target }) => {
     return (
       <>
         <Jumbotron>
-          <h3>{timetable.target}</h3>
+          {isLoaded ? <h3>{timetable.target}</h3> : spinner}
         </Jumbotron>
         <Row>
           <Col>
