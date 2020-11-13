@@ -1,9 +1,10 @@
-import React from "react";
+import React, { FC } from "react";
 import "./App.css";
+
 import { Page } from "./components/Page";
 
-export const basename = "/sfu-timetable-3d50";
+export const Basename = "/sfu-timetable-3d50";
 
-export const App: React.FunctionComponent = () => {
+export const App: FC = () => {
   return <Page />;
 };

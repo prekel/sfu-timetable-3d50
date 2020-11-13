@@ -1,20 +1,29 @@
 import React, { FC } from "react";
-import { Timetable } from "../Timetable";
+import { Alert } from "react-bootstrap";
 
-import { Col } from "react-bootstrap";
-
+import { Timetable, WeekEnum, DayEnum } from "../Timetable";
 import { TimetableDay } from "./TimetableDay";
 
-export const TimetableWeek: FC<{ week: string; timetable: Timetable }> = ({
+export const TimetableWeek: FC<{ week: WeekEnum; timetable: Timetable }> = ({
   week,
   timetable,
 }) => {
   return (
     <>
-      {[1, 2, 3, 4, 5, 6].map((day) => (
+      <Alert variant={"secondary"}>
+        {week === WeekEnum.Uneven ? "Нечётная неделя" : "Чётная неделя"}
+      </Alert>{[
+        DayEnum.Monday,
+        DayEnum.Tuesday,
+        DayEnum.Wednesday,
+        DayEnum.Thursday,
+        DayEnum.Friday,
+        DayEnum.Saturday,
+        DayEnum.Sunday
+      ].map((day) => (
         <React.Fragment key={day}>
           <TimetableDay
-            day={day.toString()}
+            day={day}
             week={week}
             timetable={timetable}
           ></TimetableDay>

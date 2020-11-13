@@ -1,20 +1,20 @@
-import React from "react";
+import React, { FC } from "react";
 import { HashRouter, BrowserRouter, Redirect } from "react-router-dom";
 import { Container } from "react-bootstrap";
 
-import { basename } from "../App";
+import { Basename } from "../App";
 import { MainSwitch } from "./MainSwitch";
-import { TargetForm } from "./TargetForm";
+import { Navigation } from "./Navigation";
 
-export const Page: React.FunctionComponent = () => {
+export const Page: FC = () => {
   return (
-    <BrowserRouter basename={basename}>
+    <BrowserRouter basename={Basename}>
       <>
-        <Redirect to={"/"} />
+        <Redirect push to={"/"} />
         <HashRouter>
           <>
             <Container>
-              <TargetForm />
+              <Navigation />
               <MainSwitch />
             </Container>
           </>
