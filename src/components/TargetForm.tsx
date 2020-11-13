@@ -11,7 +11,7 @@ export const TargetForm: React.FunctionComponent = () => {
     <>
       <Redirect push to={"/" + encodeURIComponent(currentTarget)} />
       <Form
-        onSubmit={(event) => {
+        onSubmit={(event) => { 
           event.preventDefault();
           setCurrentTarget(target);
         }}
