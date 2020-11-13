@@ -27,13 +27,11 @@ export const Navigation: FC = () => {
               <Nav.Link eventKey="ки18-16б">КИ18-16б</Nav.Link>
             </LinkContainer>
           </Nav.Item>
-
           <Nav.Item>
             <LinkContainer to={"/" + encodeURIComponent("КИ18-17/1б")}>
               <Nav.Link eventKey="ки18-17/1б">КИ18-17/1б</Nav.Link>
             </LinkContainer>
           </Nav.Item>
-
           <Nav.Item>
             <LinkContainer to={"/" + encodeURIComponent("КИ18-17/2б")}>
               <Nav.Link eventKey="ки18-17/2б">КИ18-17/2б</Nav.Link>
