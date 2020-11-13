@@ -9,6 +9,7 @@ export const TimetableTable: FC<{ target: string }> = ({ target }) => {
   const [timetable, setTimetable] = useState<Timetable | null>(null);
 
   useEffect(() => {
+    setTimetable(null);
     fetch(
       "https://edu.sfu-kras.ru/api/timetable/get&target=" +
         encodeURIComponent(target)
