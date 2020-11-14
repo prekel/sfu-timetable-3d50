@@ -36,7 +36,7 @@ export const TimetableCarousel: FC<{ timetable: Timetable }> = ({
             {"<<"}
           </Button>
         </Col>
-        <Col>
+        <Col xs={3}>
           <TimetableDay
             day={DayEnumFromDayNumber(previous.getDay())}
             week={GetWeekNum(previous)}
@@ -44,7 +44,7 @@ export const TimetableCarousel: FC<{ timetable: Timetable }> = ({
             date={previous}
           ></TimetableDay>
         </Col>
-        <Col>
+        <Col xs={4}>
           <TimetableDay
             day={DayEnumFromDayNumber(current.getDay())}
             week={GetWeekNum(current)}
@@ -52,7 +52,7 @@ export const TimetableCarousel: FC<{ timetable: Timetable }> = ({
             date={current}
           ></TimetableDay>
         </Col>
-        <Col>
+        <Col xs={3}>
           <TimetableDay
             day={DayEnumFromDayNumber(next.getDay())}
             week={GetWeekNum(next)}
