@@ -9,6 +9,8 @@ import { Basename } from "../App";
 export const Navigation: FC = () => {
   const match = useRouteMatch<{ target: string }>("/:target");
 
+  const groups = ["КИ18-16б", "КИ18-17/1б", "КИ18-17/2б"];
+
   return (
     <Navbar bg="light" expand="lg">
       <LinkContainer to="/">
@@ -22,21 +24,13 @@ export const Navigation: FC = () => {
           ).toLowerCase()}
           className="mr-auto"
         >
-          <Nav.Item>
-            <LinkContainer to={"/" + encodeURIComponent("КИ18-16б")}>
-              <Nav.Link eventKey="ки18-16б">КИ18-16б</Nav.Link>
-            </LinkContainer>
-          </Nav.Item>
-          <Nav.Item>
-            <LinkContainer to={"/" + encodeURIComponent("КИ18-17/1б")}>
-              <Nav.Link eventKey="ки18-17/1б">КИ18-17/1б</Nav.Link>
-            </LinkContainer>
-          </Nav.Item>
-          <Nav.Item>
-            <LinkContainer to={"/" + encodeURIComponent("КИ18-17/2б")}>
-              <Nav.Link eventKey="ки18-17/2б">КИ18-17/2б</Nav.Link>
-            </LinkContainer>
-          </Nav.Item>
+          {groups.map((group) => (
+            <Nav.Item>
+              <LinkContainer to={"/" + encodeURIComponent(group)}>
+                <Nav.Link eventKey={group.toLowerCase()}>{group}</Nav.Link>
+              </LinkContainer>
+            </Nav.Item>
+          ))}
         </Nav>
         <TargetForm />
       </Navbar.Collapse>

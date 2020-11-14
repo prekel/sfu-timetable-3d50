@@ -82,10 +82,10 @@ export const TimetableTable: FC<{ target: string }> = ({ target }) => {
 
         <Container>
           <Row>
-            <Col>
+            <Col xs={6}>
               <TimetableWeek week={WeekEnum.Uneven} timetable={timetable} />
             </Col>
-            <Col>
+            <Col xs={6}>
               <TimetableWeek week={WeekEnum.Even} timetable={timetable} />
             </Col>
           </Row>

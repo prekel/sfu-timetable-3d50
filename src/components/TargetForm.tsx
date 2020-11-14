@@ -28,7 +28,7 @@ export const TargetForm: React.FunctionComponent = () => {
           setCurrentTarget(target);
         }}
       >
-        <Row>
+        <Row className="no-gutters">
           <Col>
             <Form.Group>
               <Form.Control
@@ -37,7 +37,7 @@ export const TargetForm: React.FunctionComponent = () => {
                 onChange={(event) => setTarget(event.target.value)}
               />
             </Form.Group>
-          </Col>  
+          </Col>
           <Col>
             <Button type="submit">Открыть</Button>
           </Col>
