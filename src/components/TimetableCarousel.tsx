@@ -1,5 +1,5 @@
-import React, { FC } from "react";
-import { Carousel, Row, Col } from "react-bootstrap";
+import React, { FC, useState } from "react";
+import { Row, Col, Button } from "react-bootstrap";
 
 import { Timetable, DayEnumFromDayNumber, GetWeekNum } from "../Timetable";
 import { TimetableDay } from "./TimetableDay";
@@ -7,48 +7,70 @@ import { TimetableDay } from "./TimetableDay";
 export const TimetableCarousel: FC<{ timetable: Timetable }> = ({
   timetable,
 }) => {
+  const [index, setIndex] = useState(3);
+
   const today = new Date();
   const days = Array.from({ length: 20 }, (x, i) => i)
     .map((elem) => elem - 3)
     .map((daydiff) => {
       let date1 = new Date();
       date1.setDate(today.getDate() + daydiff);
-      let date2 = new Date();
-      date2.setDate(today.getDate() + daydiff - 1);
-      let date3 = new Date();
-      date3.setDate(today.getDate() + daydiff - 2);
-      return { date1, date2, date3 };
-    });
+      return date1;
+    })
+    .filter((date) => date.getDay() !== 0);
+
+  const previous = days[index - 1];
+  const current = days[index];
+  const next = days[index + 1];
 
   return (
-    <Carousel fade>
-      {days.map(({ date1, date2, date3 }) => (
-        <Carousel.Item key={date2.toDateString()}>
-          <Row>
-            <Col>
-              <TimetableDay
-                day={DayEnumFromDayNumber(date3.getDay())}
-                week={GetWeekNum(date3)}
-                timetable={timetable}
-              ></TimetableDay>
-            </Col>
-            <Col>
-              <TimetableDay
-                day={DayEnumFromDayNumber(date2.getDay())}
-                week={GetWeekNum(date2)}
-                timetable={timetable}
-              ></TimetableDay>
-            </Col>
-            <Col>
-              <TimetableDay
-                day={DayEnumFromDayNumber(date1.getDay())}
-                week={GetWeekNum(date1)}
-                timetable={timetable}
-              ></TimetableDay>
-            </Col>
-          </Row>
-        </Carousel.Item>
-      ))}
-    </Carousel>
+    <>
+      <Row>
+        <Col xs={1}>
+          <Button
+            className="timetable-carousel-btn"
+            variant="light"
+            onClick={() => setIndex(index - 1)}
+            disabled={index === 1}
+          >
+            {"<<"}
+          </Button>
+        </Col>
+        <Col>
+          <TimetableDay
+            day={DayEnumFromDayNumber(previous.getDay())}
+            week={GetWeekNum(previous)}
+            timetable={timetable}
+            date={previous}
+          ></TimetableDay>
+        </Col>
+        <Col>
+          <TimetableDay
+            day={DayEnumFromDayNumber(current.getDay())}
+            week={GetWeekNum(current)}
+            timetable={timetable}
+            date={current}
+          ></TimetableDay>
+        </Col>
+        <Col>
+          <TimetableDay
+            day={DayEnumFromDayNumber(next.getDay())}
+            week={GetWeekNum(next)}
+            timetable={timetable}
+            date={next}
+          ></TimetableDay>
+        </Col>
+        <Col xs={1}>
+          <Button
+            className="timetable-carousel-btn"
+            variant="light"
+            onClick={() => setIndex(index + 1)}
+            disabled={index === days.length - 2}
+          >
+            {">>"}
+          </Button>
+        </Col>
+      </Row>
+    </>
   );
 };

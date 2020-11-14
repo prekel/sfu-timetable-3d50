@@ -40,3 +40,9 @@
 .jumbotron {
   height: 175px;
 }
+
+.timetable-carousel-btn
+{
+  height: 100%;
+  width: 100%;
+}

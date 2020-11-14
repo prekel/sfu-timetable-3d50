@@ -8,18 +8,21 @@ export const TimetableLesson: FC<{ lesson: Lesson }> = ({ lesson }) => {
     <>
       <p>{lesson.time}</p>
       <p>{lesson.subject}</p>
-      {lesson.teacher ? (
-        <Link to={"/" + encodeURIComponent(lesson.teacher)}>
-          {lesson.teacher}
-        </Link>
-      ) : (
-        lesson.groups?.map((group, idx, arr) => (
-          <React.Fragment key={group}>
-            <Link to={"/" + encodeURIComponent(group)}>{group}</Link>
-            {idx !== arr.length - 1 ? <span>, </span> : <></>}
-          </React.Fragment>
-        ))
-      )}
+      <p>
+        {lesson.teacher ? (
+          <Link to={"/" + encodeURIComponent(lesson.teacher)}>
+            {lesson.teacher}
+          </Link>
+        ) : (
+          lesson.groups?.map((group, idx, arr) => (
+            <React.Fragment key={group}>
+              <Link to={"/" + encodeURIComponent(group)}>{group}</Link>
+              {idx !== arr.length - 1 ? <span>, </span> : <></>}
+            </React.Fragment>
+          ))
+        )}
+      </p>
+      <p>{lesson.type}</p>
       <p>{lesson.place}</p>
     </>
   );
