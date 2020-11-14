@@ -13,8 +13,10 @@ export const Page: FC = () => {
         {/* <Redirect push to={"/"} /> */}
         <HashRouter>
           <>
-            <Container>
-              <Navigation />
+            <Container fluid>
+              <Container>
+                <Navigation />
+              </Container>
               <MainSwitch />
             </Container>
           </>

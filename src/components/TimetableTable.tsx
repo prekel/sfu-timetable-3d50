@@ -1,7 +1,15 @@
 import React, { useEffect, useState, FC } from "react";
-import { Alert, Col, Jumbotron, Row, Spinner } from "react-bootstrap";
+import {
+  Alert,
+  Col,
+  Container,
+  Jumbotron,
+  Row,
+  Spinner,
+} from "react-bootstrap";
 
 import { Timetable, WeekEnum } from "../Timetable";
+import { TimetableCarousel } from "./TimetableCarousel";
 import { TimetableWeek } from "./TimetableWeek";
 
 export const TimetableTable: FC<{ target: string }> = ({ target }) => {
@@ -34,31 +42,54 @@ export const TimetableTable: FC<{ target: string }> = ({ target }) => {
   );
 
   if (error) {
-    return <Alert variant="danger">Ошибка: {error.message}</Alert>;
+    return (
+      <Container>
+        <Jumbotron>
+          <h3>
+            <Alert variant="danger">Ошибка: {error.message}</Alert>
+          </h3>
+        </Jumbotron>
+      </Container>
+    );
   } else if (!timetable) {
-    return <Jumbotron>{spinner}</Jumbotron>;
+    return (
+      <Container>
+        <Jumbotron>{spinner}</Jumbotron>
+      </Container>
+    );
   } else if (timetable.timetable.length === 0) {
     return (
-      <Jumbotron>
-        <h3>
-          <Alert variant="warning">{timetable.target} не найдено</Alert>
-        </h3>
-      </Jumbotron>
+      <Container>
+        <Jumbotron>
+          <h3>
+            <Alert variant="warning">{timetable.target} не найдено</Alert>
+          </h3>
+        </Jumbotron>
+      </Container>
     );
   } else {
     return (
       <>
-        <Jumbotron>
-          {isLoaded ? <h3>{timetable.target}</h3> : spinner}
-        </Jumbotron>
-        <Row>
-          <Col>
-            <TimetableWeek week={WeekEnum.Uneven} timetable={timetable} />
-          </Col>
-          <Col>
-            <TimetableWeek week={WeekEnum.Even} timetable={timetable} />
-          </Col>
-        </Row>
+        <Container>
+          <Jumbotron>
+            {isLoaded ? <h3>{timetable.target}</h3> : spinner}
+          </Jumbotron>
+        </Container>
+
+        <Container fluid>
+          <TimetableCarousel timetable={timetable}></TimetableCarousel>
+        </Container>
+
+        <Container>
+          <Row>
+            <Col>
+              <TimetableWeek week={WeekEnum.Uneven} timetable={timetable} />
+            </Col>
+            <Col>
+              <TimetableWeek week={WeekEnum.Even} timetable={timetable} />
+            </Col>
+          </Row>
+        </Container>
       </>
     );
   }

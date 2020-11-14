@@ -13,7 +13,8 @@ export const TimetableDay: FC<{
   day: DayEnum;
   week: WeekEnum;
   timetable: Timetable;
-}> = ({ day, week, timetable }) => {
+  date?: Date;
+}> = ({ day, week, timetable, date }) => {
   const lessons = timetable.timetable
     .filter((lesson) => lesson.day === day && lesson.week === week)
     .map((lesson) => (
@@ -31,12 +32,16 @@ export const TimetableDay: FC<{
       </ListGroup.Item>
     ));
 
+  const dateString = date ? (" " + date.toLocaleString("ru-RU", { year: 'numeric', month: 'long', day: 'numeric' })) : "";
+
   if (lessons.length === 0) {
     return <></>;
   } else {
     return (
       <Card className="mb-4">
-        <Card.Header>{DayOfWeekFromNumber(day)}</Card.Header>
+        <Card.Header>
+          {DayOfWeekFromNumber(day)} {dateString}
+        </Card.Header>
         <ListGroup variant="flush">{lessons}</ListGroup>
       </Card>
     );

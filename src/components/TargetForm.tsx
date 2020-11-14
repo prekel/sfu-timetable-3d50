@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Redirect, useRouteMatch } from "react-router-dom";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, Row, Col } from "react-bootstrap";
 
 export const TargetForm: React.FunctionComponent = () => {
   const match = useRouteMatch<{ target: string }>("/:target");
@@ -28,14 +28,20 @@ export const TargetForm: React.FunctionComponent = () => {
           setCurrentTarget(target);
         }}
       >
-        <Form.Group>
-          <Form.Control
-            className="mr-sm-2"
-            placeholder="Группа/преподаватель"
-            onChange={(event) => setTarget(event.target.value)}
-          />
-        </Form.Group>
-        <Button type="submit">Открыть</Button>
+        <Row>
+          <Col>
+            <Form.Group>
+              <Form.Control
+                className="mr-sm-2"
+                placeholder="Группа/преподаватель"
+                onChange={(event) => setTarget(event.target.value)}
+              />
+            </Form.Group>
+          </Col>  
+          <Col>
+            <Button type="submit">Открыть</Button>
+          </Col>
+        </Row>
       </Form>
     </>
   );
