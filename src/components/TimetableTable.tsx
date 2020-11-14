@@ -2,6 +2,7 @@ import React, { useEffect, useState, FC } from "react";
 import { Alert, Col, Jumbotron, Row, Spinner } from "react-bootstrap";
 
 import { Timetable, WeekEnum } from "../Timetable";
+import { TimetableCarousel } from "./TimetableCarousel";
 import { TimetableWeek } from "./TimetableWeek";
 
 export const TimetableTable: FC<{ target: string }> = ({ target }) => {
@@ -51,6 +52,7 @@ export const TimetableTable: FC<{ target: string }> = ({ target }) => {
         <Jumbotron>
           {isLoaded ? <h3>{timetable.target}</h3> : spinner}
         </Jumbotron>
+        <TimetableCarousel timetable={timetable}></TimetableCarousel>
         <Row>
           <Col>
             <TimetableWeek week={WeekEnum.Uneven} timetable={timetable} />
