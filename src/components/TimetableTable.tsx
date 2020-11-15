@@ -1,8 +1,10 @@
-import React, { useEffect, useState, FC } from "react";
+import React, { useEffect, useState, FC, useRef } from "react";
 import {
   Alert,
+  Button,
   Col,
   Container,
+  Form,
   Jumbotron,
   Row,
   Spinner,
@@ -12,7 +14,10 @@ import { Timetable, WeekEnum } from "../Timetable";
 import { TimetableCarousel } from "./TimetableCarousel";
 import { TimetableWeek } from "./TimetableWeek";
 
-export const TimetableTable: FC<{ target: string }> = ({ target }) => {
+export const TimetableTable: FC<{
+  target: string;
+  onQuickTargetToggle: (target: string, check: boolean) => void;
+}> = ({ target, onQuickTargetToggle }) => {
   const [error, setError] = useState<Error | null>(null);
   const [timetable, setTimetable] = useState<Timetable | null>(null);
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
@@ -72,7 +77,27 @@ export const TimetableTable: FC<{ target: string }> = ({ target }) => {
       <>
         <Container>
           <Jumbotron>
-            {isLoaded ? <h3>{timetable.target}</h3> : spinner}
+            {isLoaded ? (
+              <>
+                <h3>{timetable.target}</h3>
+                <Button 
+                  onClick={() => {
+                    onQuickTargetToggle(target, true);
+                  }}
+                >
+                  +
+                </Button>
+                <Button
+                  onClick={() => {
+                    onQuickTargetToggle(target, false);
+                  }}
+                >
+                  -
+                </Button>
+              </>
+            ) : (
+              spinner
+            )}
           </Jumbotron>
         </Container>
 

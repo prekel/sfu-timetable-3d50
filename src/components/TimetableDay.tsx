@@ -32,18 +32,25 @@ export const TimetableDay: FC<{
       </ListGroup.Item>
     ));
 
-  const dateString = date ? (" " + date.toLocaleString("ru-RU", { year: 'numeric', month: 'long', day: 'numeric' })) : "";
+  const dateString = date
+    ? " " +
+      date.toLocaleString("ru-RU", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      })
+    : "";
 
-  if (lessons.length === 0) {
-    return <></>;
-  } else {
-    return (
-      <Card className="mb-4">
-        <Card.Header>
-          {DayOfWeekFromNumber(day)} {dateString}
-        </Card.Header>
+  return (
+    <Card className="mb-4">
+      <Card.Header>
+        {DayOfWeekFromNumber(day)} {dateString}
+      </Card.Header>
+      {lessons.length === 0 ? (
+        <Card.Body>Нет занятий</Card.Body>
+      ) : (
         <ListGroup variant="flush">{lessons}</ListGroup>
-      </Card>
-    );
-  }
+      )}
+    </Card>
+  );
 };
