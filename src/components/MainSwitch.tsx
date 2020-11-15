@@ -1,11 +1,13 @@
-import React from "react";
+import React, { FC } from "react";
 import { Switch, Route } from "react-router";
 
 import { Home } from "./Home";
 import { TimetablePage } from "./TimetablePage";
 import { Autocomplete } from "./Autocomplete";
 
-export const MainSwitch: React.FunctionComponent = () => {
+export const MainSwitch: FC<{
+  onQuickTargetToggle: (target: string, check: boolean) => void;
+}> = ({ onQuickTargetToggle }) => {
   return (
     <>
       <Switch>
@@ -13,7 +15,7 @@ export const MainSwitch: React.FunctionComponent = () => {
           <Autocomplete></Autocomplete>
         </Route>
         <Route path="/:target">
-          <TimetablePage />
+          <TimetablePage onQuickTargetToggle={onQuickTargetToggle} />
         </Route>
         <Route path="/">
           <Home />

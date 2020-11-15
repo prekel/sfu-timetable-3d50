@@ -6,10 +6,10 @@ import { useRouteMatch } from "react-router-dom";
 import { TargetForm } from "./TargetForm";
 import { Basename } from "../App";
 
-export const Navigation: FC = () => {
+export const Navigation: FC<{ quickTargets: string[] }> = ({
+  quickTargets,
+}) => {
   const match = useRouteMatch<{ target: string }>("/:target");
-
-  const groups = ["КИ18-16б", "КИ18-17/1б", "КИ18-17/2б"];
 
   return (
     <Navbar bg="light" expand="lg">
@@ -24,8 +24,8 @@ export const Navigation: FC = () => {
           ).toLowerCase()}
           className="mr-auto"
         >
-          {groups.map((group) => (
-            <Nav.Item>
+          {quickTargets.map((group: string) => (
+            <Nav.Item key={group}>
               <LinkContainer to={"/" + encodeURIComponent(group)}>
                 <Nav.Link eventKey={group.toLowerCase()}>{group}</Nav.Link>
               </LinkContainer>
