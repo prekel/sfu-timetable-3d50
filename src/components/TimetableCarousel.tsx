@@ -25,18 +25,18 @@ export const TimetableCarousel: FC<{ timetable: Timetable }> = ({
 
   return (
     <>
-      <Row>
-        <Col xs={1}>
+      <Row className="mb-4">
+        <Col xs={2} sm={1}>
           <Button
             className="timetable-carousel-btn"
             variant="light"
             onClick={() => setIndex(index - 1)}
             disabled={index === 1}
           >
-            {"<<"}
+            {"<"}
           </Button>
         </Col>
-        <Col xs={3}>
+        <Col sm={3} className="d-none d-sm-block">
           <TimetableDay
             day={DayEnumFromDayNumber(previous.getDay())}
             week={GetWeekNum(previous)}
@@ -44,7 +44,7 @@ export const TimetableCarousel: FC<{ timetable: Timetable }> = ({
             date={previous}
           ></TimetableDay>
         </Col>
-        <Col xs={4}>
+        <Col xs={8} sm={4} >
           <TimetableDay
             day={DayEnumFromDayNumber(current.getDay())}
             week={GetWeekNum(current)}
@@ -52,7 +52,7 @@ export const TimetableCarousel: FC<{ timetable: Timetable }> = ({
             date={current}
           ></TimetableDay>
         </Col>
-        <Col xs={3}>
+        <Col sm={3} className="d-none d-sm-block">
           <TimetableDay
             day={DayEnumFromDayNumber(next.getDay())}
             week={GetWeekNum(next)}
@@ -60,14 +60,14 @@ export const TimetableCarousel: FC<{ timetable: Timetable }> = ({
             date={next}
           ></TimetableDay>
         </Col>
-        <Col xs={1}>
+        <Col xs={2} sm={1} >
           <Button
             className="timetable-carousel-btn"
             variant="light"
             onClick={() => setIndex(index + 1)}
             disabled={index === days.length - 2}
           >
-            {">>"}
+            {">"}
           </Button>
         </Col>
       </Row>
