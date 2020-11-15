@@ -11,6 +11,7 @@ import {
 } from "react-bootstrap";
 
 import { Timetable, WeekEnum } from "../Timetable";
+import { QuickTargetToggle } from "./QuickTargetToggle";
 import { TimetableCarousel } from "./TimetableCarousel";
 import { TimetableWeek } from "./TimetableWeek";
 
@@ -46,13 +47,20 @@ export const TimetableTable: FC<{
     </Spinner>
   );
 
+  const toggler = (
+    <QuickTargetToggle
+      onQuickTargetToggle={(check) => onQuickTargetToggle(target, check)}
+    ></QuickTargetToggle>
+  );
+
   if (error) {
     return (
       <Container>
         <Jumbotron>
-          <h3>
+          <h4>
             <Alert variant="danger">Ошибка: {error.message}</Alert>
-          </h3>
+          </h4>
+          {toggler}
         </Jumbotron>
       </Container>
     );
@@ -66,9 +74,10 @@ export const TimetableTable: FC<{
     return (
       <Container>
         <Jumbotron>
-          <h3>
+          <h4>
             <Alert variant="warning">{timetable.target} не найдено</Alert>
-          </h3>
+          </h4>
+          {toggler}
         </Jumbotron>
       </Container>
     );
@@ -80,20 +89,7 @@ export const TimetableTable: FC<{
             {isLoaded ? (
               <>
                 <h3>{timetable.target}</h3>
-                <Button 
-                  onClick={() => {
-                    onQuickTargetToggle(target, true);
-                  }}
-                >
-                  +
-                </Button>
-                <Button
-                  onClick={() => {
-                    onQuickTargetToggle(target, false);
-                  }}
-                >
-                  -
-                </Button>
+                {toggler}
               </>
             ) : (
               spinner
