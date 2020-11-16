@@ -17,7 +17,6 @@ export const TimetableCarousel: FC<{ timetable: Timetable }> = ({
       date1.setDate(today.getDate() + daydiff);
       return date1;
     })
-    .filter((date) => date.getDay() !== 0);
 
   const previous = days[index - 1];
   const current = days[index];
