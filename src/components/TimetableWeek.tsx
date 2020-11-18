@@ -12,14 +12,15 @@ export const TimetableWeek: FC<{ week: WeekEnum; timetable: Timetable }> = ({
     <>
       <Alert variant={"secondary"}>
         {week === WeekEnum.Uneven ? "Нечётная неделя" : "Чётная неделя"}
-      </Alert>{[
+      </Alert>
+      {[
         DayEnum.Monday,
         DayEnum.Tuesday,
         DayEnum.Wednesday,
         DayEnum.Thursday,
         DayEnum.Friday,
         DayEnum.Saturday,
-        DayEnum.Sunday
+        DayEnum.Sunday,
       ].map((day) => (
         <React.Fragment key={day}>
           <TimetableDay
