@@ -19,7 +19,7 @@ export const App: FC = () => {
 
   const [quickTargets, setQuickTargets] = useState<string[]>(initQuickTargets);
 
-  const toggleQuickTarget = (target: string, check: boolean) => {
+  const changeQuickTarget = (target: string, check: boolean) => {
     target = decodeURIComponent(target);
     let qts = localStorage.getItem("quick_targets");
     if (!qts) {
@@ -42,6 +42,6 @@ export const App: FC = () => {
   };
 
   return (
-    <Page quickTargets={quickTargets} onQuickTargetToggle={toggleQuickTarget} />
+    <Page quickTargets={quickTargets} onQuickTargetChange={changeQuickTarget} />
   );
 };

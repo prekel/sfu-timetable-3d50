@@ -4,14 +4,14 @@ import { useParams } from "react-router";
 import { TimetableTable } from "./TimetableTable";
 
 export const TimetablePage: FC<{
-  onQuickTargetToggle: (target: string, check: boolean) => void;
-}> = ({ onQuickTargetToggle }) => {
+  onQuickTargetChange: (target: string, check: boolean) => void;
+}> = ({ onQuickTargetChange }) => {
   const { target } = useParams<{ target: string }>();
   return (
     <>
       <TimetableTable
         target={target}
-        onQuickTargetToggle={onQuickTargetToggle}
+        onQuickTargetChange={onQuickTargetChange}
       />
     </>
   );

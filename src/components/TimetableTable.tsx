@@ -1,15 +1,16 @@
 import React, { FC, useEffect, useState } from "react";
-import { Alert, Container, Jumbotron, Spinner } from "react-bootstrap";
+import { Alert, Container, Spinner } from "react-bootstrap";
 
-import { Timetable, WeekEnum } from "../Timetable";
-import { QuickTargetToggle } from "./QuickTargetToggle";
+import { Timetable } from "../Timetable";
+import { QuickTargetChanger } from "./QuickTargetChanger";
 import { TimetableCarousel } from "./TimetableCarousel";
 import { TimetableColumns } from "./TimetableColumns";
+import { TimetableJumbotron } from "./TimetableJumbotron";
 
 export const TimetableTable: FC<{
   target: string;
-  onQuickTargetToggle: (target: string, check: boolean) => void;
-}> = ({ target, onQuickTargetToggle }) => {
+  onQuickTargetChange: (target: string, check: boolean) => void;
+}> = ({ target, onQuickTargetChange }) => {
   const [error, setError] = useState<Error | null>(null);
   const [timetable, setTimetable] = useState<Timetable | null>(null);
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
@@ -39,54 +40,44 @@ export const TimetableTable: FC<{
   );
 
   const toggler = (
-    <QuickTargetToggle
-      onQuickTargetToggle={(check) => onQuickTargetToggle(target, check)}
+    <QuickTargetChanger
+      onQuickTargetChange={(check) => onQuickTargetChange(target, check)}
     />
   );
 
   if (error) {
     return (
-      <Container>
-        <Jumbotron>
-          <h4>
-            <Alert variant="danger">Ошибка: {error.message}</Alert>
-          </h4>
-          {toggler}
-        </Jumbotron>
-      </Container>
+      <TimetableJumbotron>
+        <h4>
+          <Alert variant="danger">Ошибка: {error.message}</Alert>
+        </h4>
+        {toggler}
+      </TimetableJumbotron>
     );
   } else if (!timetable) {
-    return (
-      <Container>
-        <Jumbotron>{spinner}</Jumbotron>
-      </Container>
-    );
+    return <TimetableJumbotron>{spinner}</TimetableJumbotron>;
   } else if (timetable.timetable.length === 0) {
     return (
-      <Container>
-        <Jumbotron>
-          <h4>
-            <Alert variant="warning">{timetable.target} не найдено</Alert>
-          </h4>
-          {toggler}
-        </Jumbotron>
-      </Container>
+      <TimetableJumbotron>
+        <h4>
+          <Alert variant="warning">{timetable.target} не найдено</Alert>
+        </h4>
+        {toggler}
+      </TimetableJumbotron>
     );
   } else {
     return (
       <>
-        <Container>
-          <Jumbotron>
-            {isLoaded ? (
-              <>
-                <h3>{timetable.target}</h3>
-                {toggler}
-              </>
-            ) : (
-              spinner
-            )}
-          </Jumbotron>
-        </Container>
+        <TimetableJumbotron>
+          {isLoaded ? (
+            <>
+              <h3>{timetable.target}</h3>
+              {toggler}
+            </>
+          ) : (
+            spinner
+          )}
+        </TimetableJumbotron>
 
         <Container fluid>
           <TimetableCarousel timetable={timetable} />

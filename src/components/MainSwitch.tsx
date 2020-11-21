@@ -6,16 +6,16 @@ import { TimetablePage } from "./TimetablePage";
 import { Autocomplete } from "./Autocomplete";
 
 export const MainSwitch: FC<{
-  onQuickTargetToggle: (target: string, check: boolean) => void;
-}> = ({ onQuickTargetToggle }) => {
+  onQuickTargetChange: (target: string, check: boolean) => void;
+}> = ({ onQuickTargetChange }) => {
   return (
     <>
       <Switch>
         <Route path="/auto">
-          <Autocomplete></Autocomplete>
+          <Autocomplete />
         </Route>
         <Route path="/:target">
-          <TimetablePage onQuickTargetToggle={onQuickTargetToggle} />
+          <TimetablePage onQuickTargetChange={onQuickTargetChange} />
         </Route>
         <Route path="/">
           <Home />

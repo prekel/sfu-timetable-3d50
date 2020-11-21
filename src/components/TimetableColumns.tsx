@@ -11,10 +11,10 @@ export const TimetableColumns: FC<{ timetable: Timetable }> = ({
     <>
       <Row>
         <Col>
-          <Alert variant={"secondary"}>Нечётная неделя</Alert>
+          <Alert variant="secondary">Нечётная неделя</Alert>
         </Col>
         <Col>
-          <Alert variant={"secondary"}>Чётная неделя</Alert>
+          <Alert variant="secondary">Чётная неделя</Alert>
         </Col>
       </Row>
       {[
