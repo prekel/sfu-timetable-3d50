@@ -1,5 +1,4 @@
 import React, { FC } from "react";
-import { Container, Jumbotron } from "react-bootstrap";
 
 import { TargetForm } from "./TargetForm";
 import { ContainerizedJumbotron } from "./ContainerizedJumbotron";
