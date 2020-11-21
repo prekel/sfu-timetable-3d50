@@ -16,7 +16,7 @@ export const TimetableCarousel: FC<{ timetable: Timetable }> = ({
       let date1 = new Date();
       date1.setDate(today.getDate() + daydiff);
       return date1;
-    })
+    });
 
   const previous = days[index - 1];
   const current = days[index];
@@ -41,15 +41,15 @@ export const TimetableCarousel: FC<{ timetable: Timetable }> = ({
             week={GetWeekNum(previous)}
             timetable={timetable}
             date={previous}
-          ></TimetableDay>
+          />
         </Col>
-        <Col xs={8} sm={4} >
+        <Col xs={8} sm={4}>
           <TimetableDay
             day={DayEnumFromDayNumber(current.getDay())}
             week={GetWeekNum(current)}
             timetable={timetable}
             date={current}
-          ></TimetableDay>
+          />
         </Col>
         <Col sm={3} className="d-none d-sm-block">
           <TimetableDay
@@ -57,9 +57,9 @@ export const TimetableCarousel: FC<{ timetable: Timetable }> = ({
             week={GetWeekNum(next)}
             timetable={timetable}
             date={next}
-          ></TimetableDay>
+          />
         </Col>
-        <Col xs={2} sm={1} >
+        <Col xs={2} sm={1}>
           <Button
             className="timetable-carousel-btn"
             variant="light"

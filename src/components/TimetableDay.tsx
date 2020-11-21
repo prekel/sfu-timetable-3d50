@@ -28,7 +28,7 @@ export const TimetableDay: FC<{
           lesson.type
         }
       >
-        <TimetableLesson lesson={lesson}></TimetableLesson>
+        <TimetableLesson lesson={lesson} />
       </ListGroup.Item>
     ));
 

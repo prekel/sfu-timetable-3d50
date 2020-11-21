@@ -5,6 +5,7 @@ import { Container } from "react-bootstrap";
 import { Basename } from "../App";
 import { MainSwitch } from "./MainSwitch";
 import { Navigation } from "./Navigation";
+
 export const Page: FC<{
   quickTargets: string[];
   onQuickTargetChange: (target: string, check: boolean) => void;
