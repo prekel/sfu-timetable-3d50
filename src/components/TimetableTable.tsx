@@ -1,19 +1,10 @@
-import React, { useEffect, useState, FC, useRef } from "react";
-import {
-  Alert,
-  Button,
-  Col,
-  Container,
-  Form,
-  Jumbotron,
-  Row,
-  Spinner,
-} from "react-bootstrap";
+import React, { FC, useEffect, useState } from "react";
+import { Alert, Container, Jumbotron, Spinner } from "react-bootstrap";
 
 import { Timetable, WeekEnum } from "../Timetable";
 import { QuickTargetToggle } from "./QuickTargetToggle";
 import { TimetableCarousel } from "./TimetableCarousel";
-import { TimetableWeek } from "./TimetableWeek";
+import { TimetableColumns } from "./TimetableColumns";
 
 export const TimetableTable: FC<{
   target: string;
@@ -50,7 +41,7 @@ export const TimetableTable: FC<{
   const toggler = (
     <QuickTargetToggle
       onQuickTargetToggle={(check) => onQuickTargetToggle(target, check)}
-    ></QuickTargetToggle>
+    />
   );
 
   if (error) {
@@ -98,18 +89,11 @@ export const TimetableTable: FC<{
         </Container>
 
         <Container fluid>
-          <TimetableCarousel timetable={timetable}></TimetableCarousel>
+          <TimetableCarousel timetable={timetable} />
         </Container>
 
         <Container>
-          <Row>
-            <Col xs={6}>
-              <TimetableWeek week={WeekEnum.Uneven} timetable={timetable} />
-            </Col>
-            <Col xs={6}>
-              <TimetableWeek week={WeekEnum.Even} timetable={timetable} />
-            </Col>
-          </Row>
+          <TimetableColumns timetable={timetable} />
         </Container>
       </>
     );
