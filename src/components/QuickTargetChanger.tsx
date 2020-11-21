@@ -1,21 +1,21 @@
 import React, { FC } from "react";
 import { Button } from "react-bootstrap";
 
-export const QuickTargetToggle: FC<{
-  onQuickTargetToggle: (check: boolean) => void;
-}> = ({ onQuickTargetToggle }) => {
+export const QuickTargetChanger: FC<{
+  onQuickTargetChange: (check: boolean) => void;
+}> = ({ onQuickTargetChange }) => {
   return (
     <>
       <Button
         onClick={() => {
-          onQuickTargetToggle(true);
+          onQuickTargetChange(true);
         }}
       >
         +
       </Button>
       <Button
         onClick={() => {
-          onQuickTargetToggle(false);
+          onQuickTargetChange(false);
         }}
       >
         -

@@ -1,24 +1,15 @@
-import React, { useEffect, useState, FC, useRef } from "react";
-import {
-  Alert,
-  Button,
-  Col,
-  Container,
-  Form,
-  Jumbotron,
-  Row,
-  Spinner,
-} from "react-bootstrap";
+import React, { FC, useEffect, useState } from "react";
+import { Container } from "react-bootstrap";
 
-import { Timetable, WeekEnum } from "../Timetable";
-import { QuickTargetToggle } from "./QuickTargetToggle";
+import { Timetable } from "../Timetable";
 import { TimetableCarousel } from "./TimetableCarousel";
-import { TimetableWeek } from "./TimetableWeek";
+import { TimetableColumns } from "./TimetableColumns";
+import { TimetableJumbotron } from "./TimetableJumbotron";
 
 export const TimetableTable: FC<{
   target: string;
-  onQuickTargetToggle: (target: string, check: boolean) => void;
-}> = ({ target, onQuickTargetToggle }) => {
+  onQuickTargetChange: (target: string, check: boolean) => void;
+}> = ({ target, onQuickTargetChange }) => {
   const [error, setError] = useState<Error | null>(null);
   const [timetable, setTimetable] = useState<Timetable | null>(null);
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
@@ -41,77 +32,27 @@ export const TimetableTable: FC<{
       );
   }, [target]);
 
-  const spinner = (
-    <Spinner animation="border" role="status">
-      <span className="sr-only">Загрузка...</span>
-    </Spinner>
+  return (
+    <>
+      <TimetableJumbotron
+        error={error}
+        timetable={timetable}
+        isLoaded={isLoaded}
+        onQuickTargetChange={onQuickTargetChange}
+        target={target}
+      />
+      {!error && timetable && timetable.timetable.length !== 0 ? (
+        <>
+          <Container fluid>
+            <TimetableCarousel timetable={timetable} />
+          </Container>
+          <Container>
+            <TimetableColumns timetable={timetable} />
+          </Container>
+        </>
+      ) : (
+        <></>
+      )}
+    </>
   );
-
-  const toggler = (
-    <QuickTargetToggle
-      onQuickTargetToggle={(check) => onQuickTargetToggle(target, check)}
-    ></QuickTargetToggle>
-  );
-
-  if (error) {
-    return (
-      <Container>
-        <Jumbotron>
-          <h4>
-            <Alert variant="danger">Ошибка: {error.message}</Alert>
-          </h4>
-          {toggler}
-        </Jumbotron>
-      </Container>
-    );
-  } else if (!timetable) {
-    return (
-      <Container>
-        <Jumbotron>{spinner}</Jumbotron>
-      </Container>
-    );
-  } else if (timetable.timetable.length === 0) {
-    return (
-      <Container>
-        <Jumbotron>
-          <h4>
-            <Alert variant="warning">{timetable.target} не найдено</Alert>
-          </h4>
-          {toggler}
-        </Jumbotron>
-      </Container>
-    );
-  } else {
-    return (
-      <>
-        <Container>
-          <Jumbotron>
-            {isLoaded ? (
-              <>
-                <h3>{timetable.target}</h3>
-                {toggler}
-              </>
-            ) : (
-              spinner
-            )}
-          </Jumbotron>
-        </Container>
-
-        <Container fluid>
-          <TimetableCarousel timetable={timetable}></TimetableCarousel>
-        </Container>
-
-        <Container>
-          <Row>
-            <Col xs={6}>
-              <TimetableWeek week={WeekEnum.Uneven} timetable={timetable} />
-            </Col>
-            <Col xs={6}>
-              <TimetableWeek week={WeekEnum.Even} timetable={timetable} />
-            </Col>
-          </Row>
-        </Container>
-      </>
-    );
-  }
 };

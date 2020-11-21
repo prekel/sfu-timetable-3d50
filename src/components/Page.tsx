@@ -5,10 +5,11 @@ import { Container } from "react-bootstrap";
 import { Basename } from "../App";
 import { MainSwitch } from "./MainSwitch";
 import { Navigation } from "./Navigation";
+
 export const Page: FC<{
   quickTargets: string[];
-  onQuickTargetToggle: (target: string, check: boolean) => void;
-}> = ({ quickTargets, onQuickTargetToggle }) => {
+  onQuickTargetChange: (target: string, check: boolean) => void;
+}> = ({ quickTargets, onQuickTargetChange }) => {
   return (
     <BrowserRouter basename={Basename}>
       <>
@@ -19,7 +20,7 @@ export const Page: FC<{
               <Container>
                 <Navigation quickTargets={quickTargets} />
               </Container>
-              <MainSwitch onQuickTargetToggle={onQuickTargetToggle} />
+              <MainSwitch onQuickTargetChange={onQuickTargetChange} />
             </Container>
           </>
         </HashRouter>

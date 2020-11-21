@@ -1,15 +1,14 @@
-import React from "react";
+import React, { FC } from "react";
 import { Container, Jumbotron } from "react-bootstrap";
 
 import { TargetForm } from "./TargetForm";
+import { ContainerizedJumbotron } from "./ContainerizedJumbotron";
 
-export const Home: React.FunctionComponent = () => {
+export const Home: FC = () => {
   return (
-    <Container>
-      <Jumbotron>
-        <h3>Введите группу или преподавателя: </h3>
-        <TargetForm />
-      </Jumbotron>
-    </Container>
+    <ContainerizedJumbotron>
+      <h3>Введите группу или преподавателя: </h3>
+      <TargetForm />
+    </ContainerizedJumbotron>
   );
 };
