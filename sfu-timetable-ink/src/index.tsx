@@ -2,9 +2,9 @@
 import React from 'react';
 import {render} from 'ink';
 import meow from 'meow';
-import App from './ui';
+import App from './App';
 
-const cli = meow(`
+const index = meow(`
 	Usage
 	  $ sfu-timetable-ink
 
@@ -22,4 +22,4 @@ const cli = meow(`
 	}
 });
 
-render(<App name={cli.flags.name}/>);
+render(<App name={index.flags.name}/>);
