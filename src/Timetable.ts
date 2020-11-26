@@ -118,15 +118,21 @@ export const GetWeekNum = (date: Date): WeekEnum => {
   let m = month + 12 * a - 3;
   let J =
     day +
-    Math.floor((153 * m + 2) / 5) +
-    365 * y +
+    Math.floor((153 * m + 2) / 5) + 365 * y +
     Math.floor(y / 4) -
     Math.floor(y / 100) +
-    Math.floor(y / 400) -
-    32045;
+    Math.floor(y / 400) - 32045;
   let d4 = (((J + 31741 - (J % 7)) % 146097) % 36524) % 1461;
   let L = Math.floor(d4 / 1460);
   let d1 = ((d4 - L) % 365) + L;
   let week = Math.floor(d1 / 7) + 1;
   return week % 2 === 0 ? WeekEnum.Uneven : WeekEnum.Even;
 };
+
+
+export const FetchTimetable = async (target: string) => {
+  const res = await fetch(
+    "https://edu.sfu-kras.ru/api/timetable/get&target=" + encodeURIComponent(target)
+  );
+  return await res.json() as Timetable;
+}
