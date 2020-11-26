@@ -2,7 +2,7 @@
 import React from 'react';
 import {render} from 'ink';
 import meow from 'meow';
-import App from './App';
+import {App} from './App';
 
 const index = meow(`
 	Usage
@@ -15,11 +15,11 @@ const index = meow(`
 	  $ sfu-timetable-ink --name=Jane
 	  Hello, Jane
 `, {
-	flags: {
-		name: {
-			type: 'string'
-		}
-	}
+  flags: {
+    name: {
+      type: 'string'
+    }
+  }
 });
 
 render(<App name={index.flags.name}/>);
