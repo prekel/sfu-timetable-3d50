@@ -18,8 +18,9 @@ const index = meow(`
   flags: {
     name: {
       type: "string",
+      isRequired: true,
     },
   },
 });
 
-render(<App name={index.flags.name} />);
+render(<App target={index.flags.name} />);
