@@ -3,23 +3,26 @@
 	"version": "0.1.0",
 	"private": true,
 	"license": "MIT",
-	"bin": "dist/cli.js",
+	"type": "module",
+	"bin": {
+		"sfu-timetable-ink": "dist/index.js"
+	},
 	"engines": {
 		"node": ">=10"
 	},
 	"scripts": {
 		"build": "tsc",
 		"watch": "tsc --watch",
-		"start": "node -r esm ./dist/cli.js"
+		"start": "node -r esm ./dist/index.js"
 	},
 	"files": [
-		"dist/cli.js"
+		"dist/index.js"
 	],
 	"dependencies": {
-		"react": "^17.0.1",
+		"esm": "^3.2.25",
 		"ink": "^3.0.8",
 		"meow": "^8.0.0",
-		"esm": "^3.2.25"
+		"react": "^17.0.1"
 	},
 	"devDependencies": {
 		"@types/react": "^17.0.0",

@@ -22,7 +22,7 @@
 		//"esModuleInterop": true,
 		//"allowJs": true,
 		//"skipLibCheck": true,
-		//"isolatedModules": true,
+		"isolatedModules": true,
 	},
 	"include": ["src"]
 }
