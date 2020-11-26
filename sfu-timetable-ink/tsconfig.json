@@ -1,9 +1,28 @@
 {
-	"extends": "@sindresorhus/tsconfig",
 	"compilerOptions": {
+		"target": "ESNext",
+		"module": "ESNext",
+		"moduleResolution": "node",
+		"strict": true,
+		"resolveJsonModule": true,
+		//"declaration": true,
+		"pretty": true,
+		"stripInternal": true,
+		"noImplicitReturns": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"noFallthroughCasesInSwitch": true,
+		"noEmitOnError": true,
+		"useDefineForClassFields": true,
+		"forceConsistentCasingInFileNames": true,
+		"outDir": "dist",
 		"jsx": "react",
-		"esModuleInterop": true,
-		"outDir": "dist"
+		"allowSyntheticDefaultImports": true,
+
+		//"esModuleInterop": true,
+		//"allowJs": true,
+		//"skipLibCheck": true,
+		//"isolatedModules": true,
 	},
-	"include": ["source"]
+	"include": ["src"]
 }
