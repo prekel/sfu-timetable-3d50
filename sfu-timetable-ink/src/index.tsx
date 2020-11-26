@@ -1,8 +1,8 @@
 #!/usr/bin/env node
-import React from 'react';
-import {render} from 'ink';
-import meow from 'meow';
-import {App} from './App';
+import React from "react";
+import { render } from "ink";
+import meow from "meow";
+import { App } from "./App";
 
 const index = meow(`
 	Usage
@@ -17,9 +17,9 @@ const index = meow(`
 `, {
   flags: {
     name: {
-      type: 'string'
-    }
-  }
+      type: "string",
+    },
+  },
 });
 
-render(<App name={index.flags.name}/>);
+render(<App name={index.flags.name} />);
