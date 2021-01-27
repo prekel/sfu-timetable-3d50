@@ -126,7 +126,7 @@ export const GetWeekNum = (date: Date): WeekEnum => {
   let L = Math.floor(d4 / 1460);
   let d1 = ((d4 - L) % 365) + L;
   let week = Math.floor(d1 / 7) + 1;
-  return week % 2 === 0 ? WeekEnum.Uneven : WeekEnum.Even;
+  return week % 2 === 0 ? WeekEnum.Even : WeekEnum.Uneven;
 };
 
 
