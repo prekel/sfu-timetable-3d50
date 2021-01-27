@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 
-import { Timetable } from "../Timetable";
+import { Timetable, FetchTimetable } from "../Timetable";
 import { TimetableCarousel } from "./TimetableCarousel";
 import { TimetableColumns } from "./TimetableColumns";
 import { TimetableJumbotron } from "./TimetableJumbotron";
@@ -16,20 +16,14 @@ export const TimetableTable: FC<{
 
   useEffect(() => {
     setIsLoaded(false);
-    fetch(
-      "https://edu.sfu-kras.ru/api/timetable/get&target=" +
-        encodeURIComponent(target)
-    )
-      .then((res) => res.json())
-      .then(
-        (result: Timetable) => {
-          setTimetable(result);
-          setIsLoaded(true);
-        },
-        (error: Error) => {
-          setError(error);
-        }
-      );
+    FetchTimetable(target).then(
+      (result: Timetable) => {
+        setTimetable(result);
+        setIsLoaded(true);
+      },
+      (error: Error) => {
+        setError(error);
+      });
   }, [target]);
 
   return (
