@@ -3,6 +3,8 @@ import "./App.css";
 
 import { Page } from "./components/Page";
 
+import { make as Foo } from "./components/Foo.gen";
+
 export const Basename = "/sfu-timetable-3d50";
 
 export const App: FC = () => {
@@ -42,6 +44,7 @@ export const App: FC = () => {
   };
 
   return (
-    <Page quickTargets={quickTargets} onQuickTargetChange={changeQuickTarget} />
+    <Foo color="Blue" name=""></Foo>
+    //<Page quickTargets={quickTargets} onQuickTargetChange={changeQuickTarget} />
   );
 };
