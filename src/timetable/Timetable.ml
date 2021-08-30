@@ -127,6 +127,7 @@ module Lesson = struct
     room : string;
     sync : string;
   }
+  [@@genType]
 
   let decodeExn json =
     try
@@ -181,8 +182,7 @@ module Lesson = struct
           |. Option.flatMap Json.decodeString
           |> Option.getExn;
       }
-    with error ->
-      failwith @@ "Failed to decode Lesson: " ^ {j|$error|j}
+    with error -> failwith @@ "Failed to decode Lesson: " ^ {j|$error|j}
 end
 
 module Timetable = struct
@@ -192,6 +192,7 @@ module Timetable = struct
     type_ : [ `teacher | `group ];
     institute : string;
   }
+  [@@genType]
 
   let decode json =
     try
@@ -212,5 +213,19 @@ module Timetable = struct
             |. Option.getExn |. Obj.magic;
           institute = obj |. decodeStringExn "institute";
         }
-    with error -> Error ("Failed to decode Timetable", error)
+    with error -> Error ("Failed to decode Timetable: " ^ {j|$error|j})
+
+  let fetch target : _ Js.Promise.t =
+    let open Compat in
+    Fetch.fetch
+      ( "https://edu.sfu-kras.ru/api/timetable/get&target="
+      ^ Js.Global.encodeURIComponent target )
+    |. Promise.then_ (fun response -> Fetch.Response.json response)
+    |. Promise.thenResolve (fun json -> decode json)
+    [@@genType]
+
+  let fetchOpt target : _ Js.Promise.t =
+    fetch target
+    |. Promise.thenResolve (function Ok a -> Some a | Error _ -> None)
+    [@@genType]
 end

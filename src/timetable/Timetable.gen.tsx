@@ -12,6 +12,8 @@ const $$toJS668809359: { [key: string]: any } = {"0": "Uneven", "1": "Even"};
 import * as TimetableBS__Es6Import from './Timetable.bs';
 const TimetableBS: any = TimetableBS__Es6Import;
 
+import type {t as LessonTime_t} from './LessonTime.gen';
+
 // tslint:disable-next-line:interface-over-type-literal
 export type Day_t = 
     "Monday"
@@ -34,6 +36,31 @@ export type Day_en =
 
 // tslint:disable-next-line:interface-over-type-literal
 export type Week_t = "Uneven" | "Even";
+
+// tslint:disable-next-line:interface-over-type-literal
+export type Lesson_t = {
+  readonly day: Day_t; 
+  readonly week: Week_t; 
+  readonly time: LessonTime_t; 
+  readonly subject: string; 
+  readonly type_: string; 
+  readonly teacher?: string; 
+  readonly group?: string[]; 
+  readonly place: string; 
+  readonly building: string; 
+  readonly room: string; 
+  readonly sync: string
+};
+
+// tslint:disable-next-line:interface-over-type-literal
+export type Timetable_t = {
+  readonly timetable: Lesson_t[]; 
+  readonly target: string; 
+  readonly type_: 
+    "group"
+  | "teacher"; 
+  readonly institute: string
+};
 
 export const Day_toNumber: (day:Day_t) => number = function (Arg1: any) {
   const result = TimetableBS.Day.toNumber($$toRE607543633[Arg1]);
@@ -63,4 +90,18 @@ export const Week_fromNumber: (n:number) => Week_t = function (Arg1: any) {
 export const Week_fromDate: (date:Date) => Week_t = function (Arg1: any) {
   const result = TimetableBS.Week.fromDate(Arg1);
   return $$toJS668809359[result]
+};
+
+export const Timetable_fetch: (target:string) => Promise<
+    { tag: "Ok"; value: Timetable_t }
+  | { tag: "Error"; value: string }> = function (Arg1: any) {
+  const result = TimetableBS.Timetable.fetch(Arg1);
+  return result.then(function _element($promise: any) { return $promise.TAG===0
+    ? {tag:"Ok", value:{timetable:$promise._0.timetable.map(function _element(ArrayItem: any) { return {day:$$toJS607543633[ArrayItem.day], week:$$toJS668809359[ArrayItem.week], time:ArrayItem.time, subject:ArrayItem.subject, type_:ArrayItem.type_, teacher:ArrayItem.teacher, group:ArrayItem.group, place:ArrayItem.place, building:ArrayItem.building, room:ArrayItem.room, sync:ArrayItem.sync}}), target:$promise._0.target, type_:$promise._0.type_, institute:$promise._0.institute}}
+    : {tag:"Error", value:$promise._0}})
+};
+
+export const Timetable_fetchOpt: (target:string) => Promise<(null | undefined | Timetable_t)> = function (Arg1: any) {
+  const result = TimetableBS.Timetable.fetchOpt(Arg1);
+  return result.then(function _element($promise: any) { return ($promise == null ? $promise : {timetable:$promise.timetable.map(function _element(ArrayItem: any) { return {day:$$toJS607543633[ArrayItem.day], week:$$toJS668809359[ArrayItem.week], time:ArrayItem.time, subject:ArrayItem.subject, type_:ArrayItem.type_, teacher:ArrayItem.teacher, group:ArrayItem.group, place:ArrayItem.place, building:ArrayItem.building, room:ArrayItem.room, sync:ArrayItem.sync}}), target:$promise.target, type_:$promise.type_, institute:$promise.institute})})
 };
