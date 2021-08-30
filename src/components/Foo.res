@@ -1,16 +1,14 @@
 @genType
 type color =
   | Red
-  | Blue;
+  | Blue
 
-@genType
-@react.component
+@genType @react.component
 let make = (~name: string, ~color: color) => {
-  let colorStr =
-    switch (color) {
-    | Red => "red"
-    | Blue => "blue"
-    };
+  let colorStr = switch color {
+  | Red => "red"
+  | Blue => "blue"
+  }
 
-  <div className={"color-" ++ colorStr}> {React.string(name)} </div>;
-};
+  <div className={"color-" ++ colorStr}> {React.string(name)} </div>
+}

@@ -35,37 +35,6 @@ export type Day_en =
 // tslint:disable-next-line:interface-over-type-literal
 export type Week_t = "Uneven" | "Even";
 
-// tslint:disable-next-line:interface-over-type-literal
-export type lessonTime = 
-    "8:30-10:05"
-  | "10:15-11:50"
-  | "12:00-13:35"
-  | "14:10-15:45"
-  | "15:55-17:30"
-  | "17:40-19:15"
-  | "19:25-21:00";
-
-// tslint:disable-next-line:interface-over-type-literal
-export type lesson = {
-  readonly day: Day_t; 
-  readonly week: Week_t; 
-  readonly time: lessonTime; 
-  readonly subject: string; 
-  readonly type_: string; 
-  readonly place: string; 
-  readonly teacher?: string; 
-  readonly group?: string[]
-};
-
-// tslint:disable-next-line:interface-over-type-literal
-export type timetable = {
-  readonly timetable: lesson[]; 
-  readonly target: string; 
-  readonly type_: 
-    "group"
-  | "teacher"
-};
-
 export const Day_toNumber: (day:Day_t) => number = function (Arg1: any) {
   const result = TimetableBS.Day.toNumber($$toRE607543633[Arg1]);
   return result
@@ -81,14 +50,7 @@ export const Day_toRu: (day:Day_t) => string = function (Arg1: any) {
   return result
 };
 
-export const Day_toEn: (day:Day_t) => 
-    "Friday"
-  | "Monday"
-  | "Saturday"
-  | "Sunday"
-  | "Thursday"
-  | "Tuesday"
-  | "Wednesday" = function (Arg1: any) {
+export const Day_toEn: (day:Day_t) => Day_en = function (Arg1: any) {
   const result = TimetableBS.Day.toEn($$toRE607543633[Arg1]);
   return result
 };
