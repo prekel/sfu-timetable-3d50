@@ -1,9 +1,7 @@
-import React, { FC, useState } from "react";
+import { FC, useState } from "react";
 import "./App.css";
 
 import { Page } from "./components/Page";
-
-import { make as Foo } from "./components/Foo.gen";
 
 export const Basename = "/sfu-timetable-3d50";
 
