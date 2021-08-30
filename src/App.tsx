@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import { FC, useState } from "react";
 import "./App.css";
 
 import { Page } from "./components/Page";
@@ -11,7 +11,7 @@ export const App: FC = () => {
     if (!qts) {
       localStorage.setItem(
         "quick_targets",
-        JSON.stringify(["КИ18-16б", "КИ18-17/1б", "КИ18-17/2б"])
+        JSON.stringify(["КИ18-16б (1 подгруппа)", "КИ18-17/2б (1 подгруппа)"])
       );
     }
     return JSON.parse(localStorage.getItem("quick_targets")!);

@@ -1,18 +1,13 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import { Card, ListGroup } from "react-bootstrap";
 
-import {
-  Timetable,
-  DayOfWeekFromNumber,
-  DayEnum,
-  WeekEnum,
-} from "../Timetable";
 import { TimetableLesson } from "./TimetableLesson";
+import { Timetable_t, Day_t, Week_t, Day_toRu } from "../timetable/Timetable.gen"
 
 export const TimetableDay: FC<{
-  day: DayEnum;
-  week: WeekEnum;
-  timetable: Timetable;
+  day: Day_t;
+  week: Week_t;
+  timetable: Timetable_t;
   date?: Date;
 }> = ({ day, week, timetable, date }) => {
   const lessons = timetable.timetable
@@ -25,7 +20,7 @@ export const TimetableDay: FC<{
           lesson.time +
           lesson.groups +
           lesson.teacher +
-          lesson.type
+          lesson.type_
         }
       >
         <TimetableLesson lesson={lesson} />
@@ -44,7 +39,7 @@ export const TimetableDay: FC<{
   return (
     <Card className="mb-4">
       <Card.Header>
-        {DayOfWeekFromNumber(day)} {dateString}
+        {Day_toRu(day)} {dateString}
       </Card.Header>
       {lessons.length === 0 ? (
         <Card.Body>Нет занятий</Card.Body>

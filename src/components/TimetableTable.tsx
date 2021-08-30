@@ -1,27 +1,29 @@
-import React, { FC, useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 
-import { Timetable, FetchTimetable } from "../Timetable";
 import { TimetableCarousel } from "./TimetableCarousel";
 import { TimetableColumns } from "./TimetableColumns";
 import { TimetableJumbotron } from "./TimetableJumbotron";
+import { Timetable_fetchExn, Timetable_t } from "../timetable/Timetable.gen"
 
 export const TimetableTable: FC<{
   target: string;
   onQuickTargetChange: (target: string, check: boolean) => void;
 }> = ({ target, onQuickTargetChange }) => {
   const [error, setError] = useState<Error | null>(null);
-  const [timetable, setTimetable] = useState<Timetable | null>(null);
+  const [timetable, setTimetable] = useState<Timetable_t | null>(null);
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
 
   useEffect(() => {
     setIsLoaded(false);
-    FetchTimetable(target).then(
-      (result: Timetable) => {
+    Timetable_fetchExn(target).then(
+      (result) => {
         setTimetable(result);
         setIsLoaded(true);
+        setError(null);
       },
       (error: Error) => {
+        console.error(error);
         setError(error);
       });
   }, [target]);

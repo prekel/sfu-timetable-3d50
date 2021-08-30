@@ -2,9 +2,9 @@ import React, { FC } from "react";
 import { Link } from "react-router-dom";
 import { Row, Col } from "react-bootstrap";
 
-import { Lesson } from "../Timetable";
+import { Lesson_t } from "../timetable/Timetable.gen"
 
-export const TimetableLesson: FC<{ lesson: Lesson }> = ({ lesson }) => {
+export const TimetableLesson: FC<{ lesson: Lesson_t }> = ({ lesson }) => {
   return (
     <>
       <Row>
@@ -12,7 +12,7 @@ export const TimetableLesson: FC<{ lesson: Lesson }> = ({ lesson }) => {
           <p>{lesson.time}</p>
         </Col>
         <Col>
-          <p>{lesson.type}</p>
+          <p>{lesson.type_}</p>
         </Col>
       </Row>
       <Row>
