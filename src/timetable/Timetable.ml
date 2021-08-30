@@ -196,7 +196,7 @@ module Timetable = struct
     timetable : Lesson.t array;
     target : string;
     type_ : [ `teacher | `group ];
-    institute : string;
+    institute : string option;
   }
   [@@genType]
 
@@ -217,7 +217,8 @@ module Timetable = struct
             obj |. Dict.get "type"
             |. Option.flatMap Json.decodeString
             |. Option.getExn |. Obj.magic;
-          institute = obj |. decodeStringExn "institute";
+          institute =
+            obj |. Dict.get "institute" |. Option.flatMap Json.decodeString;
         }
     with error ->
       Js.Console.error error;

@@ -59,7 +59,7 @@ export type Timetable_t = {
   readonly type_: 
     "group"
   | "teacher"; 
-  readonly institute: string
+  readonly institute?: string
 };
 
 export const Day_toNumber: (day:Day_t) => number = function (Arg1: any) {

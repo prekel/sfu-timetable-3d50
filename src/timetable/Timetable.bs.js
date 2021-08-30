@@ -194,7 +194,7 @@ function decode(json) {
               timetable: timetable,
               target: decodeStringExn(obj, "target"),
               type_: Belt_Option.getExn(Belt_Option.flatMap(Js_dict.get(obj, "type"), Js_json.decodeString)),
-              institute: decodeStringExn(obj, "institute")
+              institute: Belt_Option.flatMap(Js_dict.get(obj, "institute"), Js_json.decodeString)
             }
           };
   }
