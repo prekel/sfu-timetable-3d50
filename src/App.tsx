@@ -44,7 +44,6 @@ export const App: FC = () => {
   };
 
   return (
-    <Foo color="Blue" name=""></Foo>
-    //<Page quickTargets={quickTargets} onQuickTargetChange={changeQuickTarget} />
+    <Page quickTargets={quickTargets} onQuickTargetChange={changeQuickTarget} />
   );
 };

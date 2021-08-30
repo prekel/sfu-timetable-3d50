@@ -20,10 +20,24 @@ function toNumber(day) {
 }
 
 function fromNumber(number) {
-  if (number > 7 || number < 1) {
-    return Pervasives.failwith("No day of week");
-  } else {
-    return number - 1 | 0;
+  switch (number) {
+    case 1 :
+        return /* Monday */0;
+    case 2 :
+        return /* Tuesday */1;
+    case 3 :
+        return /* Wednesday */2;
+    case 4 :
+        return /* Thursday */3;
+    case 5 :
+        return /* Friday */4;
+    case 6 :
+        return /* Saturday */5;
+    case 0 :
+    case 7 :
+        return /* Sunday */6;
+    default:
+      return Pervasives.failwith("No day of week");
   }
 }
 
@@ -71,12 +85,23 @@ function toEn(day) {
   }
 }
 
+var all = [
+  /* Monday */0,
+  /* Tuesday */1,
+  /* Wednesday */2,
+  /* Thursday */3,
+  /* Friday */4,
+  /* Saturday */5,
+  /* Sunday */6
+];
+
 var Day = {
   toNumber: toNumber,
   fromNumber: fromNumber,
   decodeExn: decodeExn,
   toRu: toRu,
-  toEn: toEn
+  toEn: toEn,
+  all: all
 };
 
 function fromNumber$1(n) {
@@ -127,7 +152,7 @@ function decodeExn$2(json) {
     var day = Belt_Option.getExn(Belt_Option.map(Js_dict.get(obj, "day"), decodeExn));
     var week = Belt_Option.getExn(Belt_Option.map(Js_dict.get(obj, "week"), decodeExn$1));
     var teacher = Belt_Option.flatMap(Js_dict.get(obj, "teacher"), Js_json.decodeString);
-    var group = Belt_Option.map(Belt_Option.map(Belt_Option.flatMap(Js_dict.get(obj, "group"), Js_json.decodeArray), (function (param) {
+    var groups = Belt_Option.map(Belt_Option.map(Belt_Option.flatMap(Js_dict.get(obj, "groups"), Js_json.decodeArray), (function (param) {
                 return $$Array.map(Js_json.decodeString, param);
               })), (function (param) {
             return $$Array.map(Belt_Option.getExn, param);
@@ -136,10 +161,10 @@ function decodeExn$2(json) {
             day: day,
             week: week,
             time: Belt_Option.getExn(Belt_Option.map(Js_dict.get(obj, "time"), LessonTime.decode)),
-            subject: Belt_Option.getExn(Belt_Option.flatMap(Js_dict.get(obj, "subjet"), Js_json.decodeString)),
+            subject: Belt_Option.getExn(Belt_Option.flatMap(Js_dict.get(obj, "subject"), Js_json.decodeString)),
             type_: Belt_Option.getExn(Belt_Option.flatMap(Js_dict.get(obj, "type"), Js_json.decodeString)),
             teacher: teacher,
-            group: group,
+            groups: groups,
             place: Belt_Option.getExn(Belt_Option.flatMap(Js_dict.get(obj, "place"), Js_json.decodeString)),
             building: Belt_Option.getExn(Belt_Option.flatMap(Js_dict.get(obj, "building"), Js_json.decodeString)),
             room: Belt_Option.getExn(Belt_Option.flatMap(Js_dict.get(obj, "room"), Js_json.decodeString)),
@@ -148,7 +173,8 @@ function decodeExn$2(json) {
   }
   catch (raw_error){
     var error = Caml_js_exceptions.internalToOCamlException(raw_error);
-    return Pervasives.failwith("Failed to decode Lesson: " + ("" + error));
+    console.error(error);
+    return Pervasives.failwith("Failed to decode Lesson");
   }
 }
 
@@ -174,9 +200,10 @@ function decode(json) {
   }
   catch (raw_error){
     var error = Caml_js_exceptions.internalToOCamlException(raw_error);
+    console.error(error);
     return {
             TAG: /* Error */1,
-            _0: "Failed to decode Timetable: " + ("" + error)
+            _0: "Failed to decode Timetable"
           };
   }
 }
@@ -196,10 +223,21 @@ function fetchOpt(target) {
             });
 }
 
+function fetchExn(target) {
+  return $$fetch$1(target).then(function (a) {
+              if (a.TAG === /* Ok */0) {
+                return a._0;
+              } else {
+                return Pervasives.failwith(a._0);
+              }
+            });
+}
+
 var Timetable = {
   decode: decode,
   $$fetch: $$fetch$1,
-  fetchOpt: fetchOpt
+  fetchOpt: fetchOpt,
+  fetchExn: fetchExn
 };
 
 var $$Option;

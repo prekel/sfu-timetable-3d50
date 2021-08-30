@@ -36,7 +36,7 @@ module Day = struct
     | 4 -> Thursday
     | 5 -> Friday
     | 6 -> Saturday
-    | 7 -> Sunday
+    | 7 | 0 -> Sunday
     | _ -> failwith "No day of week"
     [@@genType]
 
@@ -74,6 +74,10 @@ module Day = struct
     | Friday -> `Friday
     | Saturday -> `Saturday
     | Sunday -> `Sunday
+    [@@genType]
+
+  let all =
+    [| Monday; Tuesday; Wednesday; Thursday; Friday; Saturday; Sunday |]
     [@@genType]
 end
 
@@ -121,7 +125,7 @@ module Lesson = struct
     subject : string;
     type_ : string;
     teacher : string option;
-    group : string array option;
+    groups : string array option;
     place : string;
     building : string;
     room : string;
@@ -141,8 +145,8 @@ module Lesson = struct
       let teacher =
         obj |. Dict.get "teacher" |. Option.flatMap Json.decodeString
       in
-      let group =
-        obj |. Dict.get "group"
+      let groups =
+        obj |. Dict.get "groups"
         |. Option.flatMap Json.decodeArray
         |. Option.map (Array.map Json.decodeString)
         |. Option.map (Array.map Option.getExn)
@@ -156,7 +160,7 @@ module Lesson = struct
           |. Option.map LessonTime.decode
           |> Option.getExn;
         subject =
-          obj |. Dict.get "subjet"
+          obj |. Dict.get "subject"
           |. Option.flatMap Json.decodeString
           |> Option.getExn;
         type_ =
@@ -164,7 +168,7 @@ module Lesson = struct
           |. Option.flatMap Json.decodeString
           |> Option.getExn;
         teacher;
-        group;
+        groups;
         place =
           obj |. Dict.get "place"
           |. Option.flatMap Json.decodeString
@@ -182,7 +186,9 @@ module Lesson = struct
           |. Option.flatMap Json.decodeString
           |> Option.getExn;
       }
-    with error -> failwith @@ "Failed to decode Lesson: " ^ {j|$error|j}
+    with error ->
+      Js.Console.error error;
+      failwith @@ "Failed to decode Lesson"
 end
 
 module Timetable = struct
@@ -213,7 +219,9 @@ module Timetable = struct
             |. Option.getExn |. Obj.magic;
           institute = obj |. decodeStringExn "institute";
         }
-    with error -> Error ("Failed to decode Timetable: " ^ {j|$error|j})
+    with error ->
+      Js.Console.error error;
+      Error "Failed to decode Timetable"
 
   let fetch target : _ Js.Promise.t =
     let open Compat in
@@ -227,5 +235,12 @@ module Timetable = struct
   let fetchOpt target : _ Js.Promise.t =
     fetch target
     |. Promise.thenResolve (function Ok a -> Some a | Error _ -> None)
+    [@@genType]
+
+  let fetchExn target : _ Js.Promise.t =
+    fetch target
+    |. Promise.thenResolve (function
+         | Ok a -> a
+         | Error error -> failwith error)
     [@@genType]
 end

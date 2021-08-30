@@ -1,12 +1,12 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import { Alert, Spinner } from "react-bootstrap";
-import { Timetable } from "../Timetable";
 import { QuickTargetChanger } from "./QuickTargetChanger";
 import { ContainerizedJumbotron } from "./ContainerizedJumbotron";
+import { Timetable_t } from "../timetable/Timetable.gen"
 
 export const TimetableJumbotron: FC<{
   error: Error | null;
-  timetable: Timetable | null;
+  timetable: Timetable_t | null;
   isLoaded: boolean;
   onQuickTargetChange: (target: string, check: boolean) => void;
   target: string;

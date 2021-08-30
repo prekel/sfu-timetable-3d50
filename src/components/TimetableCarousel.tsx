@@ -1,10 +1,10 @@
-import React, { FC, useState } from "react";
+import { FC, useState } from "react";
 import { Row, Col, Button } from "react-bootstrap";
 
-import { Timetable, DayEnumFromDayNumber, GetWeekNum } from "../Timetable";
 import { TimetableDay } from "./TimetableDay";
+import { Timetable_t, Day_fromNumber, Week_fromDate } from "../timetable/Timetable.gen"
 
-export const TimetableCarousel: FC<{ timetable: Timetable }> = ({
+export const TimetableCarousel: FC<{ timetable: Timetable_t }> = ({
   timetable,
 }) => {
   const [index, setIndex] = useState(3);
@@ -37,24 +37,24 @@ export const TimetableCarousel: FC<{ timetable: Timetable }> = ({
         </Col>
         <Col sm={3} className="d-none d-sm-block">
           <TimetableDay
-            day={DayEnumFromDayNumber(previous.getDay())}
-            week={GetWeekNum(previous)}
+            day={Day_fromNumber(previous.getDay())}
+            week={Week_fromDate(previous)}
             timetable={timetable}
             date={previous}
           />
         </Col>
         <Col xs={8} sm={4}>
           <TimetableDay
-            day={DayEnumFromDayNumber(current.getDay())}
-            week={GetWeekNum(current)}
+            day={Day_fromNumber(current.getDay())}
+            week={Week_fromDate(current)}
             timetable={timetable}
             date={current}
           />
         </Col>
         <Col sm={3} className="d-none d-sm-block">
           <TimetableDay
-            day={DayEnumFromDayNumber(next.getDay())}
-            week={GetWeekNum(next)}
+            day={Day_fromNumber(next.getDay())}
+            week={Week_fromDate(next)}
             timetable={timetable}
             date={next}
           />

@@ -45,7 +45,7 @@ export type Lesson_t = {
   readonly subject: string; 
   readonly type_: string; 
   readonly teacher?: string; 
-  readonly group?: string[]; 
+  readonly groups?: string[]; 
   readonly place: string; 
   readonly building: string; 
   readonly room: string; 
@@ -82,6 +82,8 @@ export const Day_toEn: (day:Day_t) => Day_en = function (Arg1: any) {
   return result
 };
 
+export const Day_all: Day_t[] = TimetableBS.Day.all.map(function _element(ArrayItem: any) { return $$toJS607543633[ArrayItem]});
+
 export const Week_fromNumber: (n:number) => Week_t = function (Arg1: any) {
   const result = TimetableBS.Week.fromNumber(Arg1);
   return $$toJS668809359[result]
@@ -97,11 +99,16 @@ export const Timetable_fetch: (target:string) => Promise<
   | { tag: "Error"; value: string }> = function (Arg1: any) {
   const result = TimetableBS.Timetable.fetch(Arg1);
   return result.then(function _element($promise: any) { return $promise.TAG===0
-    ? {tag:"Ok", value:{timetable:$promise._0.timetable.map(function _element(ArrayItem: any) { return {day:$$toJS607543633[ArrayItem.day], week:$$toJS668809359[ArrayItem.week], time:ArrayItem.time, subject:ArrayItem.subject, type_:ArrayItem.type_, teacher:ArrayItem.teacher, group:ArrayItem.group, place:ArrayItem.place, building:ArrayItem.building, room:ArrayItem.room, sync:ArrayItem.sync}}), target:$promise._0.target, type_:$promise._0.type_, institute:$promise._0.institute}}
+    ? {tag:"Ok", value:{timetable:$promise._0.timetable.map(function _element(ArrayItem: any) { return {day:$$toJS607543633[ArrayItem.day], week:$$toJS668809359[ArrayItem.week], time:ArrayItem.time, subject:ArrayItem.subject, type_:ArrayItem.type_, teacher:ArrayItem.teacher, groups:ArrayItem.groups, place:ArrayItem.place, building:ArrayItem.building, room:ArrayItem.room, sync:ArrayItem.sync}}), target:$promise._0.target, type_:$promise._0.type_, institute:$promise._0.institute}}
     : {tag:"Error", value:$promise._0}})
 };
 
 export const Timetable_fetchOpt: (target:string) => Promise<(null | undefined | Timetable_t)> = function (Arg1: any) {
   const result = TimetableBS.Timetable.fetchOpt(Arg1);
-  return result.then(function _element($promise: any) { return ($promise == null ? $promise : {timetable:$promise.timetable.map(function _element(ArrayItem: any) { return {day:$$toJS607543633[ArrayItem.day], week:$$toJS668809359[ArrayItem.week], time:ArrayItem.time, subject:ArrayItem.subject, type_:ArrayItem.type_, teacher:ArrayItem.teacher, group:ArrayItem.group, place:ArrayItem.place, building:ArrayItem.building, room:ArrayItem.room, sync:ArrayItem.sync}}), target:$promise.target, type_:$promise.type_, institute:$promise.institute})})
+  return result.then(function _element($promise: any) { return ($promise == null ? $promise : {timetable:$promise.timetable.map(function _element(ArrayItem: any) { return {day:$$toJS607543633[ArrayItem.day], week:$$toJS668809359[ArrayItem.week], time:ArrayItem.time, subject:ArrayItem.subject, type_:ArrayItem.type_, teacher:ArrayItem.teacher, groups:ArrayItem.groups, place:ArrayItem.place, building:ArrayItem.building, room:ArrayItem.room, sync:ArrayItem.sync}}), target:$promise.target, type_:$promise.type_, institute:$promise.institute})})
+};
+
+export const Timetable_fetchExn: (target:string) => Promise<Timetable_t> = function (Arg1: any) {
+  const result = TimetableBS.Timetable.fetchExn(Arg1);
+  return result.then(function _element($promise: any) { return {timetable:$promise.timetable.map(function _element(ArrayItem: any) { return {day:$$toJS607543633[ArrayItem.day], week:$$toJS668809359[ArrayItem.week], time:ArrayItem.time, subject:ArrayItem.subject, type_:ArrayItem.type_, teacher:ArrayItem.teacher, groups:ArrayItem.groups, place:ArrayItem.place, building:ArrayItem.building, room:ArrayItem.room, sync:ArrayItem.sync}}), target:$promise.target, type_:$promise.type_, institute:$promise.institute}})
 };
