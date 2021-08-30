@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Redirect, useRouteMatch } from "react-router-dom";
 import { Form, Button, Row, Col } from "react-bootstrap";
 
+import { make as TargetAutocomplete }  from "./TargetAutocomplete.gen"
+
 export const TargetForm: React.FunctionComponent = () => {
   const match = useRouteMatch<{ target: string }>("/:target");
   const [target, setTarget] = useState(match ? match?.params.target : "");
@@ -43,6 +45,10 @@ export const TargetForm: React.FunctionComponent = () => {
           </Col>
         </Row>
       </Form>
+      <TargetAutocomplete onSubmit={(qwe) => {
+          setIsNeedRedirect(true);
+          setCurrentTarget(target);
+        }}></TargetAutocomplete>
     </>
   );
 };
