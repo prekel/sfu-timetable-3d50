@@ -231,3 +231,4 @@ sketch
 build
 /lib/
 /.merlin
+.bsb.lock

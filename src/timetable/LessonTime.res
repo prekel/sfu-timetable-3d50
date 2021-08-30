@@ -8,3 +8,7 @@ type t = [
   | #"17:40-19:15"
   | #"19:25-21:00"
 ]
+
+let decode = (json): t => {
+  json->Js.Json.decodeString->Belt.Option.getExn->Obj.magic
+}

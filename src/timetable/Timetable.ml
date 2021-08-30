@@ -1,3 +1,11 @@
+module Option = Belt.Option
+module Result = Belt.Result
+module Json = Js.Json
+module Dict = Js.Dict
+
+let decodeStringExn obj key =
+  obj |. Dict.get key |. Option.flatMap Json.decodeString |. Option.getExn
+
 module Day = struct
   type t =
     | Monday
@@ -31,6 +39,10 @@ module Day = struct
     | 7 -> Sunday
     | _ -> failwith "No day of week"
     [@@genType]
+
+  let decodeExn json =
+    Json.decodeString json |> Option.getExn |> Belt.Int.fromString
+    |> Option.getExn |> fromNumber
 
   let toRu day =
     match day with
@@ -72,6 +84,10 @@ module Week = struct
     match n with 1 -> Uneven | 2 -> Even | _ -> failwith ""
     [@@genType]
 
+  let decodeExn json =
+    Json.decodeString json |> Option.getExn |> Belt.Int.fromString
+    |> Option.getExn |> fromNumber
+
   let fromDate (date : Js.Date.t) =
     let day = date |. Js.Date.getDate |. Belt.Int.fromFloat in
     let month = date |. Js.Date.getMonth |. Belt.Int.fromFloat in
@@ -97,19 +113,104 @@ module Week = struct
     [@@genType]
 end
 
-type lesson = {
-  day : Day.t;
-  week : Week.t;
-  time : LessonTime.t;
-  subject : string;
-  type_ : string;
-  place : string;
-  teacher : string option;
-  group : string array option;
-}
+module Lesson = struct
+  type t = {
+    day : Day.t;
+    week : Week.t;
+    time : LessonTime.t;
+    subject : string;
+    type_ : string;
+    teacher : string option;
+    group : string array option;
+    place : string;
+    building : string;
+    room : string;
+    sync : string;
+  }
 
-type timetable = {
-  timetable : lesson array;
-  target : string;
-  type_ : [ `teacher | `group ];
-}
+  let decodeExn json =
+    try
+      let obj = json |> Json.decodeObject |> Option.getExn in
+      let day =
+        obj |. Dict.get "day" |. Option.map Day.decodeExn |> Option.getExn
+      in
+      let week =
+        obj |. Dict.get "week" |. Option.map Week.decodeExn |> Option.getExn
+      in
+      let teacher =
+        obj |. Dict.get "teacher" |. Option.flatMap Json.decodeString
+      in
+      let group =
+        obj |. Dict.get "group"
+        |. Option.flatMap Json.decodeArray
+        |. Option.map (Array.map Json.decodeString)
+        |. Option.map (Array.map Option.getExn)
+      in
+
+      {
+        day;
+        week;
+        time =
+          obj |. Dict.get "time"
+          |. Option.map LessonTime.decode
+          |> Option.getExn;
+        subject =
+          obj |. Dict.get "subjet"
+          |. Option.flatMap Json.decodeString
+          |> Option.getExn;
+        type_ =
+          obj |. Dict.get "type"
+          |. Option.flatMap Json.decodeString
+          |> Option.getExn;
+        teacher;
+        group;
+        place =
+          obj |. Dict.get "place"
+          |. Option.flatMap Json.decodeString
+          |> Option.getExn;
+        building =
+          obj |. Dict.get "building"
+          |. Option.flatMap Json.decodeString
+          |> Option.getExn;
+        room =
+          obj |. Dict.get "room"
+          |. Option.flatMap Json.decodeString
+          |> Option.getExn;
+        sync =
+          obj |. Dict.get "sync"
+          |. Option.flatMap Json.decodeString
+          |> Option.getExn;
+      }
+    with error ->
+      failwith @@ "Failed to decode Lesson: " ^ {j|$error|j}
+end
+
+module Timetable = struct
+  type t = {
+    timetable : Lesson.t array;
+    target : string;
+    type_ : [ `teacher | `group ];
+    institute : string;
+  }
+
+  let decode json =
+    try
+      let obj = json |. Json.decodeObject |> Option.getExn in
+      let timetable =
+        obj |. Dict.get "timetable"
+        |. Option.flatMap Json.decodeArray
+        |. Option.map (Array.map Lesson.decodeExn)
+        |. Option.getExn
+      in
+      Ok
+        {
+          timetable;
+          target = obj |. decodeStringExn "target";
+          type_ =
+            obj |. Dict.get "type"
+            |. Option.flatMap Json.decodeString
+            |. Option.getExn |. Obj.magic;
+          institute = obj |. decodeStringExn "institute";
+        }
+    with error -> Error ("Failed to decode Timetable", error)
+end

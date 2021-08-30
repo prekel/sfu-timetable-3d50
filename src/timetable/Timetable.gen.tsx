@@ -1,4 +1,4 @@
-/* TypeScript file generated from Timetable.res by genType. */
+/* TypeScript file generated from Timetable.ml by genType. */
 /* eslint-disable import/first */
 
 
