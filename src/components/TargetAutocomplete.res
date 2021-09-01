@@ -9,7 +9,7 @@ let make = (~onSubmit) => {
       Autocomplete.fetch(pattern)->Promise.thenResolve(options => setOptions(_ => options))
   }
 
-  let updateOptionsDebounced = ReactDebounce.useDebounced(~wait=675, updateOptions)
+  let updateOptionsDebounced = ReactDebounce.useDebounced(~wait=375, updateOptions)
 
   React.useEffect1(() => {
     let () = updateOptionsDebounced(search)
@@ -22,7 +22,7 @@ let make = (~onSubmit) => {
       className="form-inline"
       onSubmit={event => {
         ReactEvent.Synthetic.preventDefault(event)
-        onSubmit("qwe")
+        onSubmit(search)
       }}>
       <div className="no-gutters row">
         <div className="col">
@@ -45,8 +45,12 @@ let make = (~onSubmit) => {
         </div>
       </div>
     </form>
-    <div>
-      {options->Belt.Array.map(option => <span> {React.string(option)} </span>)->React.array}
-    </div>
+    {if display {
+      <div>
+        {options->Belt.Array.map(option => <span> {React.string(option)} </span>)->React.array}
+      </div>
+    } else {
+      <> </>
+    }}
   </>
 }

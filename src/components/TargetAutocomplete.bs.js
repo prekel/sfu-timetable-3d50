@@ -30,7 +30,7 @@ function TargetAutocomplete(Props) {
         });
     
   };
-  var updateOptionsDebounced = ReactDebounce.useDebounced(675, updateOptions);
+  var updateOptionsDebounced = ReactDebounce.useDebounced(375, updateOptions);
   React.useEffect((function () {
           Curry._1(updateOptionsDebounced, search);
           console.log(options);
@@ -40,7 +40,7 @@ function TargetAutocomplete(Props) {
                   className: "form-inline",
                   onSubmit: (function ($$event) {
                       $$event.preventDefault();
-                      return Curry._1(onSubmit, "qwe");
+                      return Curry._1(onSubmit, search);
                     })
                 }, React.createElement("div", {
                       className: "no-gutters row"
@@ -65,9 +65,9 @@ function TargetAutocomplete(Props) {
                         }, React.createElement("button", {
                               className: "btn btn-primary",
                               type: "submit"
-                            }, "Открыть")))), React.createElement("div", undefined, Belt_Array.map(options, (function (option) {
-                        return React.createElement("span", undefined, option);
-                      }))));
+                            }, "Открыть")))), match[0] ? React.createElement("div", undefined, Belt_Array.map(options, (function (option) {
+                          return React.createElement("span", undefined, option);
+                        }))) : React.createElement(React.Fragment, undefined));
 }
 
 var make = TargetAutocomplete;
