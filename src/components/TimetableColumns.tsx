@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Alert, Col, Row } from "react-bootstrap";
 
 import { TimetableDay } from "./TimetableDay";
-import { Timetable_t, Day_all } from "../timetable/Timetable.gen"
+import { Timetable_t, Day_all } from "../shared/Timetable.gen"
 
 export const TimetableColumns: FC<{ timetable: Timetable_t }> = ({
   timetable,

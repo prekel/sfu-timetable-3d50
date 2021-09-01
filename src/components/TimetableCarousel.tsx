@@ -2,7 +2,7 @@ import { FC, useState } from "react";
 import { Row, Col, Button } from "react-bootstrap";
 
 import { TimetableDay } from "./TimetableDay";
-import { Timetable_t, Day_fromNumber, Week_fromDate } from "../timetable/Timetable.gen"
+import { Timetable_t, Day_fromNumber, Week_fromDate } from "../shared/Timetable.gen"
 
 export const TimetableCarousel: FC<{ timetable: Timetable_t }> = ({
   timetable,

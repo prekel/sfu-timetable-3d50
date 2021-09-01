@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Card, ListGroup } from "react-bootstrap";
 
 import { TimetableLesson } from "./TimetableLesson";
-import { Timetable_t, Day_t, Week_t, Day_toRu } from "../timetable/Timetable.gen"
+import { Timetable_t, Day_t, Week_t, Day_toRu } from "../shared/Timetable.gen"
 
 export const TimetableDay: FC<{
   day: Day_t;
