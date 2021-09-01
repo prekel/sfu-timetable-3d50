@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect, FC } from "react";
 import { Redirect, useRouteMatch } from "react-router-dom";
-import { Form, Button, Row, Col } from "react-bootstrap";
 
-export const TargetForm: React.FunctionComponent = () => {
+import { make as TargetAutocomplete }  from "./TargetAutocomplete.gen"
+
+export const TargetForm: FC = () => {
   const match = useRouteMatch<{ target: string }>("/:target");
-  const [target, setTarget] = useState(match ? match?.params.target : "");
-  const [currentTarget, setCurrentTarget] = useState(target);
+  const [currentTarget, setCurrentTarget] = useState(match ? match?.params.target : "");
   const [isNeedRedirect, setIsNeedRedirect] = useState(false);
 
   useEffect(() => {
@@ -20,29 +20,11 @@ export const TargetForm: React.FunctionComponent = () => {
       ) : (
         <></>
       )}
-      <Form
-        inline
-        onSubmit={(event) => {
-          event.preventDefault();
+      <TargetAutocomplete onSubmit={(newTarget) => {
           setIsNeedRedirect(true);
-          setCurrentTarget(target);
+          setCurrentTarget(newTarget);
         }}
-      >
-        <Row className="no-gutters">
-          <Col>
-            <Form.Group>
-              <Form.Control
-                className="mr-sm-2"
-                placeholder="Группа/преподаватель"
-                onChange={(event) => setTarget(event.target.value)}
-              />
-            </Form.Group>
-          </Col>
-          <Col>
-            <Button type="submit">Открыть</Button>
-          </Col>
-        </Row>
-      </Form>
+      />
     </>
   );
 };

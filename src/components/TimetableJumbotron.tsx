@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Alert, Spinner } from "react-bootstrap";
 import { QuickTargetChanger } from "./QuickTargetChanger";
 import { ContainerizedJumbotron } from "./ContainerizedJumbotron";
-import { Timetable_t } from "../timetable/Timetable.gen"
+import { Timetable_t } from "../shared/Timetable.gen"
 
 export const TimetableJumbotron: FC<{
   error: Error | null;

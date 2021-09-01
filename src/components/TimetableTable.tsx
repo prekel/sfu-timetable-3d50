@@ -4,7 +4,7 @@ import { Container } from "react-bootstrap";
 import { TimetableCarousel } from "./TimetableCarousel";
 import { TimetableColumns } from "./TimetableColumns";
 import { TimetableJumbotron } from "./TimetableJumbotron";
-import { Timetable_fetchExn, Timetable_t } from "../timetable/Timetable.gen"
+import { Timetable_fetchExn, Timetable_t } from "../shared/Timetable.gen"
 
 export const TimetableTable: FC<{
   target: string;

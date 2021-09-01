@@ -28,6 +28,7 @@
   "bs-dependencies": [
     "@rescript/react",
     "@ryyppy/rescript-promise",
-    "bs-fetch"
+    "bs-fetch",
+    "rescript-debounce-react"
   ]
 }
