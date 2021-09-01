@@ -30,6 +30,7 @@ let make = (~onSubmit) => {
             <input
               placeholder=`Группа/преподаватель`
               className="mr-sm-2 form-control"
+              value={search}
               onChange={event => {
                 let a = ReactEvent.Form.target(event)["value"]
                 setSearch(_ => a)
@@ -47,7 +48,7 @@ let make = (~onSubmit) => {
     </form>
     {if display {
       <div>
-        {options->Belt.Array.map(option => <span> {React.string(option)} </span>)->React.array}
+        {options->Belt.Array.map(option => <span onClick={_ => setSearch(_ => option)}> {React.string(option)} </span>)->React.array}
       </div>
     } else {
       <> </>

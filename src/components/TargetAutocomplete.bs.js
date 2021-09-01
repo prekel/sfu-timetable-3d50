@@ -51,6 +51,7 @@ function TargetAutocomplete(Props) {
                             }, React.createElement("input", {
                                   className: "mr-sm-2 form-control",
                                   placeholder: "Группа/преподаватель",
+                                  value: search,
                                   onChange: (function ($$event) {
                                       var a = $$event.target.value;
                                       Curry._1(setSearch, (function (param) {
@@ -66,7 +67,13 @@ function TargetAutocomplete(Props) {
                               className: "btn btn-primary",
                               type: "submit"
                             }, "Открыть")))), match[0] ? React.createElement("div", undefined, Belt_Array.map(options, (function (option) {
-                          return React.createElement("span", undefined, option);
+                          return React.createElement("span", {
+                                      onClick: (function (param) {
+                                          return Curry._1(setSearch, (function (param) {
+                                                        return option;
+                                                      }));
+                                        })
+                                    }, option);
                         }))) : React.createElement(React.Fragment, undefined));
 }
 
