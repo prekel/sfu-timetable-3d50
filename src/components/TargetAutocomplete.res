@@ -9,8 +9,10 @@ let make = (~onSubmit) => {
       Autocomplete.fetch(pattern)->Promise.thenResolve(options => setOptions(_ => options))
   }
 
+  let updateOptionsDebounced = ReactDebounce.useDebounced(~wait=675, updateOptions)
+
   React.useEffect1(() => {
-    let () = updateOptions(search)
+    let () = updateOptionsDebounced(search)
     Js.Console.log(options)
     None
   }, [search])

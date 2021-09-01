@@ -4,6 +4,7 @@ import * as Curry from "rescript/lib/es6/curry.js";
 import * as React from "react";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Autocomplete from "../shared/autocomplete.bs.js";
+import * as ReactDebounce from "rescript-debounce-react/src/ReactDebounce.bs.js";
 
 function TargetAutocomplete(Props) {
   var onSubmit = Props.onSubmit;
@@ -29,8 +30,9 @@ function TargetAutocomplete(Props) {
         });
     
   };
+  var updateOptionsDebounced = ReactDebounce.useDebounced(675, updateOptions);
   React.useEffect((function () {
-          updateOptions(search);
+          Curry._1(updateOptionsDebounced, search);
           console.log(options);
           
         }), [search]);
