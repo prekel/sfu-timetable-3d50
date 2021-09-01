@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import { Link } from "react-router-dom";
 import { Row, Col } from "react-bootstrap";
 
-import { Lesson_t } from "../timetable/Timetable.gen"
+import { Lesson_t } from "../shared/Timetable.gen"
 
 export const TimetableLesson: FC<{ lesson: Lesson_t }> = ({ lesson }) => {
   return (

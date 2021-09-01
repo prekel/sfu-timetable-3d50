@@ -1,4 +1,4 @@
-@react.compenent @genType
+@react.component @genType
 let make = (~onSubmit) => {
   <>
     <form

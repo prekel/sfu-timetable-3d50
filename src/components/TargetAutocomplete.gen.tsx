@@ -2,11 +2,13 @@
 /* eslint-disable import/first */
 
 
+import * as React from 'react';
+
 // @ts-ignore: Implicit any on import
 import * as TargetAutocompleteBS__Es6Import from './TargetAutocomplete.bs';
 const TargetAutocompleteBS: any = TargetAutocompleteBS__Es6Import;
 
-export const make: (_1:{ readonly onSubmit: ((_1:string) => void) }) => JSX.Element = function (Arg1: any) {
-  const result = TargetAutocompleteBS.make(Arg1.onSubmit);
-  return result
-};
+// tslint:disable-next-line:interface-over-type-literal
+export type Props = { readonly onSubmit: (_1:string) => void };
+
+export const make: React.ComponentType<{ readonly onSubmit: (_1:string) => void }> = TargetAutocompleteBS.make;

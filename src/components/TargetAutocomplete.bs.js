@@ -3,7 +3,8 @@
 import * as Curry from "rescript/lib/es6/curry.js";
 import * as React from "react";
 
-function make(onSubmit) {
+function TargetAutocomplete(Props) {
+  var onSubmit = Props.onSubmit;
   return React.createElement(React.Fragment, undefined, React.createElement("form", {
                   className: "form-inline",
                   onSubmit: (function ($$event) {
@@ -26,6 +27,8 @@ function make(onSubmit) {
                               type: "submit"
                             }, "Открыть")))));
 }
+
+var make = TargetAutocomplete;
 
 export {
   make ,
