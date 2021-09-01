@@ -1,5 +1,20 @@
 @react.component @genType
 let make = (~onSubmit) => {
+  let (display, setDisplay) = React.useState(() => false)
+  let (search, setSearch) = React.useState(() => "")
+  let (options, setOptions) = React.useState(() => [])
+
+  let updateOptions = pattern => {
+    let _: Js.Promise.t<unit> =
+      Autocomplete.fetch(pattern)->Promise.thenResolve(options => setOptions(_ => options))
+  }
+
+  React.useEffect1(() => {
+    let () = updateOptions(search)
+    Js.Console.log(options)
+    None
+  }, [search])
+
   <>
     <form
       className="form-inline"
@@ -11,7 +26,13 @@ let make = (~onSubmit) => {
         <div className="col">
           <div className="form-group">
             <input
-              placeholder=`Группа/преподаватель` className="mr-sm-2 form-control"
+              placeholder=`Группа/преподаватель`
+              className="mr-sm-2 form-control"
+              onChange={event => {
+                let a = ReactEvent.Form.target(event)["value"]
+                setSearch(_ => a)
+                setDisplay(_ => true)
+              }}
             />
           </div>
         </div>
@@ -22,5 +43,8 @@ let make = (~onSubmit) => {
         </div>
       </div>
     </form>
+    <div>
+      {options->Belt.Array.map(option => <span> {React.string(option)} </span>)->React.array}
+    </div>
   </>
 }
