@@ -12,6 +12,7 @@ function TargetAutocomplete(Props) {
         return false;
       });
   var setDisplay = match[1];
+  var display = match[0];
   var match$1 = React.useState(function () {
         return "";
       });
@@ -30,50 +31,54 @@ function TargetAutocomplete(Props) {
         });
     
   };
-  var updateOptionsDebounced = ReactDebounce.useDebounced(375, updateOptions);
+  var updateOptionsDebounced = ReactDebounce.useDebounced(275, updateOptions);
   React.useEffect((function () {
-          Curry._1(updateOptionsDebounced, search);
-          console.log(options);
+          if (display) {
+            Curry._1(updateOptionsDebounced, search);
+            console.log(options);
+          }
           
         }), [search]);
-  return React.createElement(React.Fragment, undefined, React.createElement("form", {
-                  className: "form-inline",
-                  onSubmit: (function ($$event) {
-                      $$event.preventDefault();
-                      return Curry._1(onSubmit, search);
+  return React.createElement("form", {
+              className: "form-inline my-2 my-lg-0 pos-rel",
+              onSubmit: (function ($$event) {
+                  $$event.preventDefault();
+                  Curry._1(onSubmit, search);
+                  Curry._1(setDisplay, (function (param) {
+                          return false;
+                        }));
+                  return Curry._1(setSearch, (function (param) {
+                                return "";
+                              }));
+                })
+            }, React.createElement("input", {
+                  className: "form-control mr-sm-2 form-control",
+                  placeholder: "Группа/преподаватель",
+                  value: search,
+                  onChange: (function ($$event) {
+                      var a = $$event.target.value;
+                      Curry._1(setSearch, (function (param) {
+                              return a;
+                            }));
+                      return Curry._1(setDisplay, (function (param) {
+                                    return true;
+                                  }));
                     })
-                }, React.createElement("div", {
-                      className: "no-gutters row"
-                    }, React.createElement("div", {
-                          className: "col"
-                        }, React.createElement("div", {
-                              className: "form-group"
-                            }, React.createElement("input", {
-                                  className: "mr-sm-2 form-control",
-                                  placeholder: "Группа/преподаватель",
-                                  value: search,
-                                  onChange: (function ($$event) {
-                                      var a = $$event.target.value;
-                                      Curry._1(setSearch, (function (param) {
-                                              return a;
-                                            }));
-                                      return Curry._1(setDisplay, (function (param) {
-                                                    return true;
-                                                  }));
-                                    })
-                                }))), React.createElement("div", {
-                          className: "col"
-                        }, React.createElement("button", {
-                              className: "btn btn-primary",
-                              type: "submit"
-                            }, "Открыть")))), match[0] ? React.createElement("div", undefined, Belt_Array.map(options, (function (option) {
-                          return React.createElement("span", {
+                }), React.createElement("button", {
+                  className: "btn btn-primary",
+                  type: "submit"
+                }, "Открыть"), display ? React.createElement("ul", {
+                    className: "autoContainer list-group"
+                  }, Belt_Array.map(options, (function (option) {
+                          return React.createElement("li", {
+                                      key: option,
+                                      className: "list-group-item",
                                       onClick: (function (param) {
                                           return Curry._1(setSearch, (function (param) {
                                                         return option;
                                                       }));
                                         })
-                                    }, option);
+                                    }, React.createElement("span", undefined, option));
                         }))) : React.createElement(React.Fragment, undefined));
 }
 

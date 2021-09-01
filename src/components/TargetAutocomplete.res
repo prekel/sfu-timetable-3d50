@@ -9,49 +9,47 @@ let make = (~onSubmit) => {
       Autocomplete.fetch(pattern)->Promise.thenResolve(options => setOptions(_ => options))
   }
 
-  let updateOptionsDebounced = ReactDebounce.useDebounced(~wait=375, updateOptions)
+  let updateOptionsDebounced = ReactDebounce.useDebounced(~wait=275, updateOptions)
 
   React.useEffect1(() => {
-    let () = updateOptionsDebounced(search)
-    Js.Console.log(options)
+    if display {
+      let () = updateOptionsDebounced(search)
+      Js.Console.log(options)
+    }
     None
   }, [search])
 
-  <>
-    <form
-      className="form-inline"
-      onSubmit={event => {
-        ReactEvent.Synthetic.preventDefault(event)
-        onSubmit(search)
-      }}>
-      <div className="no-gutters row">
-        <div className="col">
-          <div className="form-group">
-            <input
-              placeholder=`Группа/преподаватель`
-              className="mr-sm-2 form-control"
-              value={search}
-              onChange={event => {
-                let a = ReactEvent.Form.target(event)["value"]
-                setSearch(_ => a)
-                setDisplay(_ => true)
-              }}
-            />
-          </div>
-        </div>
-        <div className="col">
-          <button type_="submit" className="btn btn-primary">
-            {React.string(`Открыть`)}
-          </button>
-        </div>
-      </div>
-    </form>
+  <form
+    className="form-inline my-2 my-lg-0 pos-rel"
+    onSubmit={event => {
+      ReactEvent.Synthetic.preventDefault(event)
+      onSubmit(search)
+      setDisplay(_ => false)
+      setSearch(_ => "")
+    }}>
+    <input
+      placeholder=`Группа/преподаватель`
+      className="form-control mr-sm-2 form-control"
+      value={search}
+      onChange={event => {
+        let a = ReactEvent.Form.target(event)["value"]
+        setSearch(_ => a)
+        setDisplay(_ => true)
+      }}
+    />
+    <button type_="submit" className="btn btn-primary"> {React.string(`Открыть`)} </button>
     {if display {
-      <div>
-        {options->Belt.Array.map(option => <span onClick={_ => setSearch(_ => option)}> {React.string(option)} </span>)->React.array}
-      </div>
+      <ul className="autoContainer list-group">
+        {options
+        ->Belt.Array.map(option =>
+          <li className="list-group-item" onClick={_ => setSearch(_ => option)} key={option}>
+            <span> {React.string(option)} </span>
+          </li>
+        )
+        ->React.array}
+      </ul>
     } else {
       <> </>
     }}
-  </>
+  </form>
 }
